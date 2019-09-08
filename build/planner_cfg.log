@@ -1,0 +1,57 @@
+/home/milesching/workspace/TiEV/src/modules/planner/src/planner_tool/runtime_info/log.cpp 42 : 2019-09-07 22:33:21 {
+"roadmapFile" : "/home/milesching/workspace/TiEV/src/logs/jiugongge_task1_all_final-1117_modified.txt",
+"secondroadmapFile" : "/home/milesching/workspace/TiEV/src/logs/chouqian-4-II-D-dasha-cemen_modified.txt",
+	"masterCfgFile" : "//home/milesching/workspace/TiEV/src/cfg/pidcontroller.json",
+	"controlMode" :0,
+        "controlModeExplanation" : "二进制低位0规划，1循迹;高位0地图mode，1人为指定",
+        "controlModeExample" :
+        [
+          {"0":"规划使用地图mode"},
+          {"1":"循迹使用地图mode"},
+          {"2":"规划人为指定mode-debugMode-debugSpeedMode"},
+          {"3":"循迹人为指定mode-debugMode-debugSpeedMode"}
+        ],
+	"debugMode" : 10,
+        "debugModeExplanation" :
+        [
+          {"START_MODE":"0"},
+          {"UTURN_MODE":"1"},
+          {"HIGHWAY_MODE":"2"},
+          {"INTERSECT_WITHLIGHT_MODE":"3"},
+          {"INTERSECT_NOLIGHT_MODE":"4"},
+          {"MAPFREE_MODE":"5"},
+          {"OBSTACLFREE_MODE":"6"},
+          {"CLIMB_MODE":"7"},
+          {"STOP_MODE":"8"},
+          {"TOLLSTATION_MODE":"9"},
+          {"NORMAL_DRIVING_MODE":"10"},
+          {"PARK_MODE":"11"},
+          {"EMERGENCY_MODE":"12"},
+          {"BACKWARD_MODE":"13"},
+          {"FOGGY_MODE":"14"},
+          {"SIDEPARKING_MODE":"15"}
+        ],
+	"debugSpeedMode" : 5,
+        "debugSpeedModeExplanation" :
+        [
+          {"BACK":"0      -3"},
+          {"STOP":"1      0"},
+          {"VERYLOW":"2   8"},
+          {"LOW":"3       15"},
+          {"MID":"4       25"},
+          {"HIGH":"5      40"},
+          {"VERYHIGH":"6  60"}
+        ],
+
+	"aimDistance" :
+	[
+		{"start":20, "end":30},
+		{"start":0, "end":0},
+		{"start":15, "end":22},
+		{"start":30, "end":45},
+		{"start":45, "end":60},
+		{"start":100, "end":120},
+		{"start":160, "end":175}
+	]
+}
+
