@@ -8,7 +8,7 @@ namespace EZVisual{
     public:
         void SetByJSON(rapidjson::Value& json){
             this->VisualElement::SetByJSON(json);
-            if(!json["MinWidth"].IsNull())
+            if(json["MinWidth"].IsInt())
                 min_width = json["MinWidth"].GetInt();
         }
 

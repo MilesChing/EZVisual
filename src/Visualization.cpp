@@ -23,6 +23,10 @@ namespace EZVisual{
         if(!doc["ScaleY"].IsNull())
             scale_y = doc["ScaleY"].GetDouble();
 
+        if(doc["Background"].IsString()){
+            background = EZVisual::Color(doc["Background"].GetString());
+        }
+
         Value& layout = doc["Layout"];
         if(layout.IsNull()) throw "No layout found.";
         else{
@@ -52,6 +56,7 @@ namespace EZVisual{
                     view = Mat::zeros(visual_tree_root->GetHeight(),
                             visual_tree_root->GetWidth(), CV_8UC3);
                 }
+                background.Cover(view);
                 visual_tree_root->Draw(view);
                 cv::resize(view, view, Size(0, 0), scale_x, scale_y);
             }

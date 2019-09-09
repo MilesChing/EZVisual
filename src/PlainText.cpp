@@ -13,9 +13,9 @@ namespace EZVisual{
             origin,
             font_family,
             font_size,
-            cv::Scalar(font_color.B(),
-                font_color.G(),
-                font_color.R()),
+            cv::Scalar(font_color.b,
+                font_color.g,
+                font_color.r),
             font_weight
         );
 

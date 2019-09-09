@@ -10,7 +10,7 @@ namespace EZVisual{
         Mat roi_border(target,
             Rect(margin[0], margin[1],
                 border_width, border_height));
-        roi_border = Scalar(background.B(), background.G(), background.R());
+        background.Cover(roi_border);
 
         if(content){
             int content_x = 0, content_y = 0;

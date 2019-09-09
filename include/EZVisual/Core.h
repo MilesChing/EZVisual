@@ -1,4 +1,5 @@
 #include <string>
+#include "opencv2/opencv.hpp"
 using namespace std;
 
 #ifndef _EZVISUAL_CORE_
@@ -39,20 +40,25 @@ namespace EZVisual{
     public:
         Color(){}
 
-        u_char R() const;
-        u_char G() const;
-        u_char B() const;
+        Color(u_char A, u_char R, u_char G, u_char B);
 
         Color(u_char R, u_char G, u_char B);
 
-        Color(int rgb);
+        Color(unsigned int argb);
 
-        Color(const string& rgb);
+        Color(const std::string& argb);
 
-        bool operator ==(const Color& c) const;
+        void Cover(cv::Mat& mat) const;
 
-    protected:
-        u_char r = 0xff, g = 0xff, b = 0xff;
+        void Cover(cv::Vec3b& v3) const;
+
+        bool operator == (const Color& c) const;
+
+        bool operator != (const Color& c) const;
+
+        operator unsigned int() const;
+
+        u_char a = 0x00, r = 0xff, g = 0xff, b = 0xff;
     };
 
     void Convert(const string& data, HorizontalAlignment& attr);

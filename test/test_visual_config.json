@@ -1,37 +1,35 @@
 {
     "Title": "MilesChing",
     "FPS": 40,
+    "Background": "#ff0000",
     "Layout": {
         "Type": "AutoWrapStack",
-        "Orientation": "Vertical",
+        "WrapLength": 300,
+        "Background": "#ffffff",
         "Padding": 20,
         "Children": [
-            {   "Type": "Border",
-                "Id": 15,
-                "MinWidth": 50,
-                "MinHeight": 50,
-                "Margin": 10,
-                "Background": "#335577" },
-            {   "Type": "Border",
-                "MinWidth": 50,
-                "MinHeight": 80,
-                "Margin": 10,
-                "Background": "#773355" },
-            {   "Type": "Border",
-                "MinWidth": 50,
-                "MinHeight": 20,
-                "Margin": 10,
-                "Background": "#337755" },
-            {   "Type": "Border",
-                "MinWidth": 50,
-                "MinHeight": 50,
-                "Margin": 10,
-                "Background": "#553377" },
-            {   "Type": "Border",
-                "MinWidth": 50,
-                "MinHeight": 50,
-                "Margin": 10,
-                "Background": "#557733" }
+            { "Type": "Border", "MinHeight": 100,
+                                "MinWidth": 100,
+                                "Background": "#ccff0000" },
+            { "Type": "Border", "MinHeight": 100,
+                                "MinWidth": 100,
+                                "Background": "#aaff0000" },
+            { "Type": "Border", "MinHeight": 100,
+                                "MinWidth": 100,
+                                "Background": "#77ff0000" },
+            { "Type": "Border", "MinHeight": 100,
+                                "MinWidth": 100,
+                                "Background": "#55ff0000" },
+            { "Type": "Border", "MinHeight": 100,
+                                "MinWidth": 200,
+                                "Background": "#33ff0000",
+                                "Content":{
+                                    "Type": "PlainText",
+                                    "Text": "XSM",
+                                    "FontColor": "#ffffff",
+                                    "FontWeight": 2
+                                }
+            }
         ]
     }
 }

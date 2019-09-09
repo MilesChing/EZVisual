@@ -8,14 +8,13 @@ namespace EZVisual{
     public:
         void SetByJSON(rapidjson::Value& json){
             this->VisualElement::SetByJSON(json);
-            if(json["Background"].IsString())
+            if(json["Background"].IsString()){
                 background = Color(json["Background"].GetString());
+            }
         }
 
         void SetBackground(const Color& color){
-            if(background.R() != color.R() ||
-                background.G() != color.G() ||
-                background.B() != color.B()){
+            if(background != color){
                 background = color;
                 need_redraw = true;
             }

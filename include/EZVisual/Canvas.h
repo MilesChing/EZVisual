@@ -11,7 +11,6 @@ namespace EZVisual{
 #ifndef _EZVISUAL_CANVAS_
 #define _EZVISUAL_CANVAS_
     class Canvas : virtual public Marginable,
-                 , virtual public Paddingable
                  , virtual public Backgroundable{
     public:
         Canvas(){}
@@ -26,12 +25,16 @@ namespace EZVisual{
         void SetByJSON(rapidjson::Value& json_value);
         void RegistId(map<int, VisualElement*>& controls);
 
-        void SetLayer(int layer_index, const vector<tuple<int, int>>& layer, const Color& layer_color);
+        void SetShape(int layer_index, const vector<tuple<int, int>>& layer, const Color& layer_color);
 
-        void SetLayer(int layer_index, const vector<int>& layer);
+        void SetImage(int layer_index, const vector<int>& layer);
 
     protected:
-        vector<vector<tuple<int, int, int>>> pixels;
+        vector<vector<unsigned int>> pixels;
+        int layer_count = 1, layer_width, layer_height;
+
+    private:
+        int GetPos(int r, int c);
     };
 #endif
 }

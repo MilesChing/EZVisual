@@ -9,9 +9,7 @@ namespace EZVisual{
             height - margin[1] - margin[3]
         ));
 
-        roi_this = cv::Scalar(background.G(),
-                            background.G(),
-                            background.R());
+        background.Cover(roi_this);
 
         for(int i = 0; i < children.size(); ++i){
             cv::Mat t(target, Rect(

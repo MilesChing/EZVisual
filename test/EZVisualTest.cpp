@@ -13,17 +13,15 @@ using namespace EZVisual;
 int main(){
     try{
         Visualization vis("/home/milesching/workspace/EZVisual/test/test_visual_config.json");
-        thread t(&Visualization::LaunchWindow, &vis);
-        unsigned int k = 0;
-        while(k += 255){
-            usleep(10000);
-            vis.Invoke(15, [k](VisualElement* element){
-                element->SetBackground(k);
-            });
-        }
-        t.join();
+        vis.LaunchWindow();
+    }
+    catch(string s){
+        cout << s;
     }
     catch(const char* s){
+        cout << s;
+    }
+    catch(double s){
         cout << s;
     }
     return 0;
