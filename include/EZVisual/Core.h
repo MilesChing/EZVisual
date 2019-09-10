@@ -1,6 +1,11 @@
 #include <string>
+#include "rapidjson/rapidjson.h"
+#include "rapidjson/document.h"
+#include "rapidjson/stringbuffer.h"
+#include "rapidjson/writer.h"
 #include "opencv2/opencv.hpp"
 using namespace std;
+using namespace rapidjson;
 
 #ifndef _EZVISUAL_CORE_
 #define _EZVISUAL_CORE_
@@ -66,7 +71,7 @@ namespace EZVisual{
     void Convert(const string& data, VisualElementType& attr);
     void Convert(const string& data, Orientation& attr);
 
-    VisualElement* GetVisualElementFromType(const VisualElementType& type);
+    VisualElement* GetVisualElementFromType(const VisualElementType& type, rapidjson::Value& json);
 }
 
 #endif

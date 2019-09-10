@@ -7,8 +7,8 @@ namespace EZVisual{
 #define _EZVISUAL_CHILDRENABLE_
     class Childrenable : virtual public VisualElement{
     public:
-        void SetByJSON(rapidjson::Value& json){
-            this->VisualElement::SetByJSON(json);
+
+        Childrenable(rapidjson::Value& json) : VisualElement(json){
             for(auto child : children) delete child;
             children.clear();
             rapidjson::Value& ch = json["Children"];
@@ -18,13 +18,21 @@ namespace EZVisual{
                     Value& child = array[i];
                     VisualElementType type;
                     Convert(child["Type"].GetString(), type);
-                    children.push_back(GetVisualElementFromType(type));
-                    children.back()->SetByJSON(child);
+                    children.push_back(GetVisualElementFromType(type, child));
                 }
             }
         }
 
+        VisualElement* SearchElementById(int id){
+            if(id == this->id) return this;
 
+            for(auto child : children){
+                auto res = child->SearchElementById(id);
+                if(res) return res;
+            }
+
+            return NULL;
+        }
 
     protected:
         vector<VisualElement*> children;

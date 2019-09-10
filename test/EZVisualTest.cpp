@@ -3,6 +3,7 @@
 #include <thread>
 #include "EZVisual/Border.h"
 #include "EZVisual/Visualization.h"
+#include "EZVisual/PlainText.h"
 #include "opencv2/opencv.hpp"
 #include "unistd.h"
 using namespace std;
@@ -13,7 +14,15 @@ using namespace EZVisual;
 int main(){
     try{
         Visualization vis("/home/milesching/workspace/EZVisual/test/test_visual_config.json");
-        vis.LaunchWindow();
+
+        thread t(&Visualization::LaunchWindow, &vis);
+        int i = 0;
+        while(++i){
+            usleep(100000);
+            vis.Invoke<PlainText>(15, [i](PlainText* text){
+                text->SetText(to_string(i).c_str());
+            });
+        }
     }
     catch(string s){
         cout << s;

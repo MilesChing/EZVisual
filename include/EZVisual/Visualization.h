@@ -17,7 +17,12 @@ namespace EZVisual{
         Visualization(string visual_config);
         ~Visualization();
         void LaunchWindow();
-        void Invoke(int target_id, std::function<void(VisualElement*)> operation);
+        template<typename T> void Invoke(int target_id, std::function<void(T*)> operation){
+            std::unique_lock<std::mutex> lck_measure_and_draw(measure_and_draw_mtx);
+            auto p = visual_tree_root->SearchElementById(target_id);
+            if(!p) throw "Id not found.";
+            else operation(dynamic_cast<T*>(p));
+        }
     private:
         std::mutex view_mtx, measure_and_draw_mtx;
 

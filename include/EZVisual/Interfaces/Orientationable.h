@@ -6,8 +6,7 @@ namespace EZVisual{
 #define _EZVISUAL_ORIENTATIONABLE_
     class Orientationable : virtual public VisualElement{
     public:
-        void SetByJSON(rapidjson::Value& json){
-            this->VisualElement::SetByJSON(json);
+        Orientationable(rapidjson::Value& json) : VisualElement(json){
             rapidjson::Value& o = json["Orientation"];
             if(!o.IsNull()){
                 Convert(o.GetString(), orientation);
@@ -15,10 +14,8 @@ namespace EZVisual{
         }
 
         void SetOrientation(const Orientation& orientation){
-            if(this->orientation != orientation){
+            if(this->orientation != orientation)
                 this->orientation = orientation;
-                need_redraw = true;
-            }
         }
     protected:
         Orientation orientation = Vertical;

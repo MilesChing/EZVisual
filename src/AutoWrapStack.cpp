@@ -2,6 +2,19 @@
 
 namespace EZVisual{
 
+    AutoWrapStack::AutoWrapStack(rapidjson::Value& json) :
+        Backgroundable(json),
+        MinWidthable(json),
+        MinHeightable(json),
+        Marginable(json),
+        Paddingable(json),
+        Childrenable(json),
+        Orientationable(json),
+        VisualElement(json){
+        if(json["WrapLength"].IsInt())
+            wrap_length = json["WrapLength"].GetInt();
+    }
+
     void AutoWrapStack::Draw(cv::Mat& target){
         cv::Mat roi_this(target, Rect(
             margin[0], margin[1],
@@ -22,7 +35,7 @@ namespace EZVisual{
             children[i]->Draw(t);
         }
 
-        need_redraw = false;
+
     }
 
     void AutoWrapStack::Measure(){
@@ -84,35 +97,8 @@ namespace EZVisual{
         return TYPE_AUTO_WRAP_STACK;
     }
 
-    bool AutoWrapStack::NeedRedraw() const{
-        if(need_redraw) return true;
-        for(auto child : children)
-            if(child->NeedRedraw())
-                return true;
-        return false;
-    }
-
-    void AutoWrapStack::SetByJSON(rapidjson::Value& json_value){
-        this->Backgroundable::SetByJSON(json_value);
-        this->MinWidthable::SetByJSON(json_value);
-        this->MinHeightable::SetByJSON(json_value);
-        this->Marginable::SetByJSON(json_value);
-        this->Paddingable::SetByJSON(json_value);
-        this->Childrenable::SetByJSON(json_value);
-        this->Orientationable::SetByJSON(json_value);
-
-        if(json_value["WrapLength"].IsInt())
-            wrap_length = json_value["WrapLength"].GetInt();
-    }
-
-    void AutoWrapStack::RegistId(map<int, VisualElement*>& controls){
-        controls.insert(make_pair(id, this));
-        for(auto child : children) child->RegistId(controls);
-    }
-
     void AutoWrapStack::SetWrapLength(int length){
         wrap_length = length;
-        need_redraw = true;
     }
 
 }

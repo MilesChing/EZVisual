@@ -6,8 +6,7 @@ namespace EZVisual{
 #define _EZVISUAL_PADDINGABLE_
     class Paddingable : virtual public VisualElement{
     public:
-        void SetByJSON(rapidjson::Value& json){
-            this->VisualElement::SetByJSON(json);
+        Paddingable(rapidjson::Value& json) : VisualElement(json){
             if(json["Padding"].IsArray()){
                 auto mg = json["Padding"].GetArray();
                 padding[0] = mg[0].GetInt();

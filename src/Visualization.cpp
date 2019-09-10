@@ -32,11 +32,8 @@ namespace EZVisual{
         else{
             VisualElementType type;
             Convert(layout["Type"].GetString(), type);
-            visual_tree_root = GetVisualElementFromType(type);
-            visual_tree_root->SetByJSON(layout);
+            visual_tree_root = GetVisualElementFromType(type, layout);
         }
-
-        visual_tree_root->RegistId(controls);
     }
 
     Visualization::~Visualization(){
@@ -47,7 +44,7 @@ namespace EZVisual{
         cv::namedWindow(title);
         int interval_ms = 1000 / fps;
         while(1){
-            if(visual_tree_root->NeedRedraw()){
+            if(true){
                 std::unique_lock<std::mutex> lck_measure_and_draw(measure_and_draw_mtx);
                 visual_tree_root->Measure();
                 std::unique_lock<std::mutex> lck_view(view_mtx);
@@ -64,13 +61,6 @@ namespace EZVisual{
             if(cv::waitKey(interval_ms) == 27) break;
         }
         cv::destroyWindow(title);
-    }
-
-    void Visualization::Invoke(int target_id, std::function<void(VisualElement*)> operation){
-        std::unique_lock<std::mutex> lck_measure_and_draw(measure_and_draw_mtx);
-        auto p = controls.find(target_id);
-        if(p == controls.end()) throw "Id not found.";
-        else operation(p->second);
     }
 
 }

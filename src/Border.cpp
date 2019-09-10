@@ -2,6 +2,15 @@
 
 namespace EZVisual{
 
+    Border::Border(rapidjson::Value& json) :
+        Backgroundable(json),
+        MinWidthable(json),
+        MinHeightable(json),
+        Marginable(json),
+        Paddingable(json),
+        Contentable(json),
+        VisualElement(json){}
+
     void Border::Draw(cv::Mat& target){
         if(target.rows < height || target.cols < width)
             throw "Draw() need more space.";
@@ -34,7 +43,7 @@ namespace EZVisual{
             content->Draw(roi_content);
         }
 
-        need_redraw = false;
+
     }
 
     void Border::Measure(){
@@ -57,24 +66,6 @@ namespace EZVisual{
 
     VisualElementType Border::getType() const{
        return VisualElementType::TYPE_BORDER;
-    }
-
-    void Border::SetByJSON(rapidjson::Value& json_value){
-        this->Backgroundable::SetByJSON(json_value);
-        this->MinWidthable::SetByJSON(json_value);
-        this->MinHeightable::SetByJSON(json_value);
-        this->Marginable::SetByJSON(json_value);
-        this->Paddingable::SetByJSON(json_value);
-        this->Contentable::SetByJSON(json_value);
-    }
-
-    bool Border::NeedRedraw() const{
-        return need_redraw || (content && content->NeedRedraw());
-    }
-
-    void Border::RegistId(map<int, VisualElement*>& controls){
-        controls.insert(make_pair(id, this));
-        if(content) content->RegistId(controls);
     }
 
     Border::~Border(){

@@ -10,12 +10,12 @@ using namespace std;
 
 namespace EZVisual{
 
-    VisualElement* GetVisualElementFromType(const VisualElementType& type){
+    VisualElement* GetVisualElementFromType(const VisualElementType& type, rapidjson::Value& json){
         switch(type){
-            case TYPE_BORDER: return new Border;
-            case TYPE_STACK_VIEW: return new StackView;
-            case TYPE_PLAIN_TEXT: return new PlainText;
-            case TYPE_AUTO_WRAP_STACK: return new AutoWrapStack;
+            case TYPE_BORDER: return new Border(json);
+            case TYPE_STACK_VIEW: return new StackView(json);
+            case TYPE_PLAIN_TEXT: return new PlainText(json);
+            case TYPE_AUTO_WRAP_STACK: return new AutoWrapStack(json);
         }
 
         return NULL;

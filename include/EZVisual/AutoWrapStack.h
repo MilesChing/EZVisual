@@ -1,6 +1,6 @@
 #include "opencv2/opencv.hpp"
 #include "EZVisual/Core.h"
-#include "EZVisual/Interfaces/Interfaces.h"
+#include "EZVisual/Interfaces.h"
 #include <string>
 #include <map>
 
@@ -18,7 +18,7 @@ namespace EZVisual{
                         , virtual public MinHeightable
                         , virtual public Orientationable{
     public:
-        AutoWrapStack(){}
+        AutoWrapStack(rapidjson::Value& json);
         ~AutoWrapStack(){};
 
         void Draw(cv::Mat& target);
@@ -26,9 +26,6 @@ namespace EZVisual{
 
         VisualElementType getType() const;
 
-        bool NeedRedraw() const;
-        void SetByJSON(rapidjson::Value& json_value);
-        void RegistId(map<int, VisualElement*>& controls);
         void SetWrapLength(int length);
 
     protected:

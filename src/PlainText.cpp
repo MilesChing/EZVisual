@@ -2,6 +2,11 @@
 
 namespace EZVisual{
 
+    PlainText::PlainText(rapidjson::Value& json) :
+        Textable(json),
+        Marginable(json),
+        VisualElement(json){}
+
     void PlainText::Draw(cv::Mat& target){
         cv::Point origin;
         origin.x = margin[0];
@@ -18,8 +23,6 @@ namespace EZVisual{
                 font_color.r),
             font_weight
         );
-
-        need_redraw = false;
     }
 
     void PlainText::Measure(){
@@ -40,19 +43,6 @@ namespace EZVisual{
 
     VisualElementType PlainText::getType() const{
         return TYPE_PLAIN_TEXT;
-    }
-
-    void PlainText::SetByJSON(rapidjson::Value& json_value){
-        this->Textable::SetByJSON(json_value);
-        this->Marginable::SetByJSON(json_value);
-    }
-
-    bool PlainText::NeedRedraw() const{
-        return need_redraw;
-    }
-
-    void PlainText::RegistId(map<int, VisualElement*>& controls){
-        controls.insert(make_pair(id, this));
     }
 
 }

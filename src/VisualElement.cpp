@@ -1,4 +1,4 @@
-#include "EZVisual/Interfaces/Interfaces.h"
+#include "EZVisual/Interfaces.h"
 #include <string>
 
 using namespace std;
@@ -16,7 +16,7 @@ namespace EZVisual{
     int VisualElement::GetId(){
         return id;
     }
-
+/*
     void VisualElement::SetByJSON(rapidjson::Value& json){
         if(json["Id"].IsInt()) id = json["Id"].GetInt();
         if(!json["HorizontalAlignment"].IsNull())
@@ -25,13 +25,26 @@ namespace EZVisual{
             Convert(json["VerticalAlignment"].GetString(), vertical_alignment);
         need_redraw |= true;
     }
-
+*/
     HorizontalAlignment VisualElement::GetHorizontalAlignment(){
         return horizontal_alignment;
     }
 
     VerticalAlignment VisualElement::GetVerticalAlignment(){
         return vertical_alignment;
+    }
+
+    VisualElement::VisualElement(rapidjson::Value& json){
+        if(json["Id"].IsInt()) id = json["Id"].GetInt();
+        if(!json["HorizontalAlignment"].IsNull())
+            Convert(json["HorizontalAlignment"].GetString(), horizontal_alignment);
+        if(!json["VerticalAlignment"].IsNull())
+            Convert(json["VerticalAlignment"].GetString(), vertical_alignment);
+    }
+
+    VisualElement* VisualElement::SearchElementById(int id){
+        if(this->id == id) return this;
+        else return NULL;
     }
 
 }

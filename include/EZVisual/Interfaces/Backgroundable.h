@@ -6,19 +6,17 @@ namespace EZVisual{
 #define _EZVISUAL_BACKGROUNDABLE_
     class Backgroundable : virtual public VisualElement{
     public:
-        void SetByJSON(rapidjson::Value& json){
-            this->VisualElement::SetByJSON(json);
+        Backgroundable(rapidjson::Value& json) : VisualElement(json){
             if(json["Background"].IsString()){
                 background = Color(json["Background"].GetString());
             }
         }
 
         void SetBackground(const Color& color){
-            if(background != color){
+            if(background != color)
                 background = color;
-                need_redraw = true;
-            }
         }
+
     protected:
         Color background;
     };

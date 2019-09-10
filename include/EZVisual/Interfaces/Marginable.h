@@ -6,8 +6,7 @@ namespace EZVisual{
 #define _EZVISUAL_MARGINABLE_
     class Marginable : virtual public VisualElement{
     public:
-        void SetByJSON(rapidjson::Value& json){
-            this->VisualElement::SetByJSON(json);
+        Marginable(rapidjson::Value& json) : VisualElement(json){
             if(json["Margin"].IsArray()){
                 auto mg = json["Margin"].GetArray();
                 margin[0] = mg[0].GetInt();
@@ -26,7 +25,6 @@ namespace EZVisual{
             margin[1] = top;
             margin[2] = right;
             margin[3] = bottom;
-            need_redraw = true;
         }
     protected:
         int margin[4] = {0};

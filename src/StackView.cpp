@@ -2,6 +2,16 @@
 
 namespace EZVisual{
 
+    StackView::StackView(rapidjson::Value& json) :
+        Backgroundable(json),
+        MinWidthable(json),
+        MinHeightable(json),
+        Marginable(json),
+        Paddingable(json),
+        Childrenable(json),
+        Orientationable(json),
+        VisualElement(json){}
+
     void StackView::Draw(cv::Mat& target){
         if(target.rows < height || target.cols < width)
             throw "Draw() need more space.";
@@ -51,7 +61,7 @@ namespace EZVisual{
             }
         }
 
-        need_redraw = false;
+
     }
 
     void StackView::Measure(){
@@ -82,28 +92,8 @@ namespace EZVisual{
         return VisualElementType::TYPE_STACK_VIEW;
     }
 
-    void StackView::SetByJSON(rapidjson::Value& json_value){
-        this->Backgroundable::SetByJSON(json_value);
-        this->MinWidthable::SetByJSON(json_value);
-        this->MinHeightable::SetByJSON(json_value);
-        this->Marginable::SetByJSON(json_value);
-        this->Paddingable::SetByJSON(json_value);
-        this->Childrenable::SetByJSON(json_value);
-        this->Orientationable::SetByJSON(json_value);
-    }
-
-    bool StackView::NeedRedraw() const{
-        if(need_redraw) return true;
-        for(auto child : children) if(child->NeedRedraw()) return true;
-        return false;
-    }
-
     StackView::~StackView(){
     }
 
-    void StackView::RegistId(map<int, VisualElement*>& controls){
-        controls.insert(make_pair(id, this));
-        for(auto child : children) child->RegistId(controls);
-    }
 
 }

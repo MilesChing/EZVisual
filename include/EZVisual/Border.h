@@ -1,4 +1,4 @@
-#include "EZVisual/Interfaces/Interfaces.h"
+#include "EZVisual/Interfaces.h"
 #include "opencv2/opencv.hpp"
 #include "rapidjson/rapidjson.h"
 #include "rapidjson/document.h"
@@ -19,18 +19,13 @@ namespace EZVisual{
                  , virtual public Paddingable
                  , virtual public Contentable{
     public:
-        Border(){}
+        Border(rapidjson::Value& json);
         ~Border();
 
         void Draw(cv::Mat& target);
         void Measure();
 
         VisualElementType getType() const;
-
-        bool NeedRedraw() const;
-
-        void SetByJSON(rapidjson::Value& json_value);
-        void RegistId(map<int, VisualElement*>& controls);
     };
 
 }

@@ -24,6 +24,7 @@
                                 "MinWidth": 200,
                                 "Background": "#33ff0000",
                                 "Content":{
+                                    "Id": 15,
                                     "Type": "PlainText",
                                     "Text": "XSM",
                                     "FontColor": "#ffffff",

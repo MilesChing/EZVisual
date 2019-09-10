@@ -6,23 +6,26 @@ namespace EZVisual{
 #define _EZVISUAL_CONTENTABLE_
     class Contentable : virtual public VisualElement{
     public:
-        void SetByJSON(rapidjson::Value& json){
-            this->VisualElement::SetByJSON(json);
+        Contentable(rapidjson::Value& json) : VisualElement(json){
             if(content) delete content;
             rapidjson::Value& con = json["Content"];
             if(!con.IsNull()){
                 VisualElementType type;
                 Convert(con["Type"].GetString(), type);
-                content = GetVisualElementFromType(type);
-                content->SetByJSON(con);
+                content = GetVisualElementFromType(type, con);
             }
+        }
+
+        VisualElement* SearchElementById(int id){
+            if(id == this->id) return this;
+            if(content) return content->SearchElementById(id);
+            return NULL;
         }
 
         void SetContent(VisualElement* content){
             if(this->content == content) return;
             if(this->content) delete content;
             this->content = content;
-            need_redraw = true;
         }
     protected:
         VisualElement* content = NULL;

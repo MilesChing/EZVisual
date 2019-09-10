@@ -1,4 +1,4 @@
-#include "EZVisual/Interfaces/Interfaces.h"
+#include "EZVisual/Interfaces.h"
 #include "EZVisual/Core.h"
 
 using namespace cv;
@@ -15,18 +15,13 @@ namespace EZVisual{
                     , virtual public Childrenable
                     , virtual public Orientationable{
     public:
-        StackView(){}
+        StackView(rapidjson::Value& json);
         ~StackView();
 
         void Draw(cv::Mat& target);
         void Measure();
 
         VisualElementType getType() const;
-
-        bool NeedRedraw() const;
-
-        void SetByJSON(rapidjson::Value& json_value);
-        void RegistId(map<int, VisualElement*>& controls);
     };
 
 }
