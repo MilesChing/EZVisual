@@ -26,6 +26,13 @@ namespace EZVisual{
             margin[2] = right;
             margin[3] = bottom;
         }
+
+        void GetMargin(int& left, int& top, int& right, int& bottom) const{
+            left = margin[0];
+            top = margin[1];
+            right = margin[2];
+            bottom = margin[3];
+        }
     protected:
         int margin[4] = {0};
     };

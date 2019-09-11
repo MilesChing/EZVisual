@@ -16,6 +16,10 @@ namespace EZVisual{
             if(min_width != this->min_width)
                 this->min_width = min_width;
         }
+
+        int GetMinWidth() const{
+            return min_width;
+        }
     protected:
         int min_width = 0;
     };

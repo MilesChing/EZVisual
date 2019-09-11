@@ -17,6 +17,10 @@ namespace EZVisual{
                 background = color;
         }
 
+        Color GetBackground() const{
+            return background;
+        }
+
     protected:
         Color background;
     };

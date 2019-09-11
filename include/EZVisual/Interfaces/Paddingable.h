@@ -26,6 +26,13 @@ namespace EZVisual{
             padding[2] = right;
             padding[3] = bottom;
         }
+
+        void GetPadding(int& left, int& top, int& right, int& bottom) const{
+            left = padding[0];
+            top = padding[1];
+            right = padding[2];
+            bottom = padding[3];
+        }
     protected:
         int padding[4] = {0};
     };

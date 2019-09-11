@@ -17,6 +17,10 @@ namespace EZVisual{
             if(this->orientation != orientation)
                 this->orientation = orientation;
         }
+
+        Orientation GetOrientation() const{
+            return orientation;
+        }
     protected:
         Orientation orientation = Vertical;
     };

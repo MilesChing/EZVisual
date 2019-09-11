@@ -16,6 +16,10 @@ namespace EZVisual{
                 this->min_height = min_height;
         }
 
+        int GetMinHeight() const{
+            return min_height;
+        }
+
     protected:
         int min_height = 0;
     };
