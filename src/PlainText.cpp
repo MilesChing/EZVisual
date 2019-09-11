@@ -1,4 +1,4 @@
-#include "EZVisual/PlainText.h"
+#include "EZVisual/Controls/PlainText.h"
 
 namespace EZVisual{
 

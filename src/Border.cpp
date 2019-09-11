@@ -1,4 +1,4 @@
-#include "EZVisual/Border.h"
+#include "EZVisual/Controls/Border.h"
 
 namespace EZVisual{
 

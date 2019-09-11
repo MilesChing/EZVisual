@@ -1,4 +1,4 @@
-#include "EZVisual/AutoWrapStack.h"
+#include "EZVisual/Controls/AutoWrapStack.h"
 
 namespace EZVisual{
 
