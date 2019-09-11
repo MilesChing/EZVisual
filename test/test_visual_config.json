@@ -24,12 +24,16 @@
                                 "MinWidth": 200,
                                 "Background": "#33ff0000",
                                 "Content":{
-                                    "Id": 15,
                                     "Type": "PlainText",
                                     "Text": "XSM",
                                     "FontColor": "#ffffff",
                                     "FontWeight": 2
                                 }
+            },
+            { "Type": "Canvas", "LayerWidth": 200,
+                                "LayerHeight": 200,
+                                "Background": "#ffffffff",
+                                "Id": 15
             }
         ]
     }

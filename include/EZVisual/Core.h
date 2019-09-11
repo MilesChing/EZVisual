@@ -32,8 +32,8 @@ namespace EZVisual{
         TYPE_BORDER,
         TYPE_STACK_VIEW,
         TYPE_PLAIN_TEXT,
-        TYPE_IMAGE_VIEW,
-        TYPE_AUTO_WRAP_STACK
+        TYPE_AUTO_WRAP_STACK,
+        TYPE_CANVAS
     };
 
     enum Orientation{
@@ -56,6 +56,8 @@ namespace EZVisual{
         void Cover(cv::Mat& mat) const;
 
         void Cover(cv::Vec3b& v3) const;
+
+        void Cover(Color& color) const;
 
         bool operator == (const Color& c) const;
 

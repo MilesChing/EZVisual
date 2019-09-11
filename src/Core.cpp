@@ -2,6 +2,7 @@
 #include "EZVisual/Border.h"
 #include "EZVisual/StackView.h"
 #include "EZVisual/PlainText.h"
+#include "EZVisual/Canvas.h"
 #include "EZVisual/AutoWrapStack.h"
 #include <sstream>
 #include <string>
@@ -16,6 +17,7 @@ namespace EZVisual{
             case TYPE_STACK_VIEW: return new StackView(json);
             case TYPE_PLAIN_TEXT: return new PlainText(json);
             case TYPE_AUTO_WRAP_STACK: return new AutoWrapStack(json);
+            case TYPE_CANVAS: return new Canvas(json);
         }
 
         return NULL;
@@ -65,6 +67,35 @@ namespace EZVisual{
         }
     }
 
+    void Color::Cover(Color& color) const{
+        if(a == 255){
+            color.a = 255;
+            color.r = r;
+            color.g = g;
+            color.b = b;
+        }
+
+        double alpha_a = a * 1.0 / 255;
+        double alpha_b = color.a * 1.0 / 255;
+
+        if(alpha_a == 0) return;
+        if(alpha_b == 0){
+            color.a = a;
+            color.r = r;
+            color.g = g;
+            color.b = b;
+        }
+
+        double new_a = 1 - (1 - alpha_a) * (1 - alpha_b);
+        double new_r = (((alpha_a) * r + (1 - alpha_a) * alpha_b * color.r)) / new_a;
+        double new_g = (((alpha_a) * g + (1 - alpha_a) * alpha_b * color.g)) / new_a;
+        double new_b = (((alpha_a) * b + (1 - alpha_a) * alpha_b * color.b)) / new_a;
+        color.a = round(new_a * 255);
+        color.r = round(new_r * 255);
+        color.g = round(new_g * 255);
+        color.b = round(new_b * 255);
+    }
+
     Color::operator unsigned int() const{
         unsigned int ai = a;
         unsigned int ri = r;
@@ -96,6 +127,7 @@ namespace EZVisual{
         else if(data == "StackView") attr = TYPE_STACK_VIEW;
         else if(data == "PlainText") attr = TYPE_PLAIN_TEXT;
         else if(data == "AutoWrapStack") attr = TYPE_AUTO_WRAP_STACK;
+        else if(data == "Canvas") attr = TYPE_CANVAS;
     }
 
     void Convert(const string& data, HorizontalAlignment& attr){
