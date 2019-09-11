@@ -65,7 +65,7 @@ namespace EZVisual{
 
         operator unsigned int() const;
 
-        u_char a = 0x00, r = 0xff, g = 0xff, b = 0xff;
+        u_char a = 0xff, r = 0xff, g = 0xff, b = 0xff;
     };
 
     void Convert(const string& data, HorizontalAlignment& attr);

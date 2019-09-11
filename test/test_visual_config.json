@@ -30,8 +30,8 @@
                                     "FontWeight": 2
                                 }
             },
-            { "Type": "Canvas", "LayerWidth": 200,
-                                "LayerHeight": 200,
+            { "Type": "Canvas", "LayerWidth": 500,
+                                "LayerHeight": 500,
                                 "Background": "#ffffffff",
                                 "Id": 15
             }

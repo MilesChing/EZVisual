@@ -1,9 +1,4 @@
-#include "EZVisual/Core.h"
-#include "EZVisual/Border.h"
-#include "EZVisual/StackView.h"
-#include "EZVisual/PlainText.h"
-#include "EZVisual/Canvas.h"
-#include "EZVisual/AutoWrapStack.h"
+#include "EZVisual/Controls.h"
 #include <sstream>
 #include <string>
 
@@ -73,6 +68,7 @@ namespace EZVisual{
             color.r = r;
             color.g = g;
             color.b = b;
+            return;
         }
 
         double alpha_a = a * 1.0 / 255;
@@ -84,6 +80,7 @@ namespace EZVisual{
             color.r = r;
             color.g = g;
             color.b = b;
+            return;
         }
 
         double new_a = 1 - (1 - alpha_a) * (1 - alpha_b);
