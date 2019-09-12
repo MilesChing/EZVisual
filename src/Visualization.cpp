@@ -41,7 +41,7 @@ namespace EZVisual{
     }
 
     void Visualization::LaunchWindow(){
-        cv::namedWindow(title);
+        cv::namedWindow(title, CV_WINDOW_AUTOSIZE);
         int interval_ms = 1000 / fps;
         while(1){
             if(true){
@@ -55,8 +55,9 @@ namespace EZVisual{
                 }
                 background.Cover(view);
                 visual_tree_root->Draw(view);
-                cv::resize(view, view, Size(0, 0), scale_x, scale_y);
+                cv::resize(view, view, cv::Size(0, 0), scale_x, scale_y, CV_INTER_LANCZOS4);
             }
+
             cv::imshow(title, view);
             if(cv::waitKey(interval_ms) == 27) break;
         }

@@ -91,6 +91,9 @@ namespace EZVisual{
             height = max(height, current_y_start + padding[3] + margin[3]);
             width = current_row_right + margin[2] + padding[2];
         }
+
+        width = max(min_width + padding[0] + padding[2] + margin[0] + margin[2], width);
+        height = max(min_height + padding[1] + padding[3] + margin[1] + margin[3], height);
     }
 
     VisualElementType AutoWrapStack::getType() const{

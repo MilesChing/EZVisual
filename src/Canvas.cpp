@@ -21,6 +21,9 @@ namespace EZVisual{
     }
 
     void Canvas::Draw(cv::Mat& target){
+        cv::Mat roi(target, cv::Rect(margin[0], margin[1], layer_width, layer_height));
+        background.Cover(roi);
+
         for(int i = 0; i < layer_count; ++i)
             for(int x = 0; x < layer_width; ++x)
                 for(int y = 0; y < layer_height; ++y)
@@ -92,7 +95,7 @@ namespace EZVisual{
         if(size.first <= 0 || size.second <= 0) throw "Layer size not legal.";
         layer_width = size.first;
         layer_height = size.second;
-        for(int i = 0; i < pixels.size(); ++i) pixels[i].resize(layer_width * layer_height);
+        for(int i = 0; i < pixels.size(); ++i) pixels[i].resize(layer_width * layer_height, 0);
     }
 
     int Canvas::GetIndex(int x, int y){

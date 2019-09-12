@@ -47,7 +47,7 @@ namespace EZVisual{
         Color font_color = Color(0);
         int font_weight = 1;
         string text = "";
-        double font_size = 1;
+        double font_size = 0.75;
         int font_family = 0;
     };
 

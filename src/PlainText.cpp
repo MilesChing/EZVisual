@@ -10,7 +10,7 @@ namespace EZVisual{
     void PlainText::Draw(cv::Mat& target){
         cv::Point origin;
         origin.x = margin[0];
-        origin.y = height - base_line_height + margin[1];
+        origin.y = height - base_line_height;
 
         cv::putText(
             target,
@@ -23,6 +23,7 @@ namespace EZVisual{
                 font_color.r),
             font_weight
         );
+
     }
 
     void PlainText::Measure(){
