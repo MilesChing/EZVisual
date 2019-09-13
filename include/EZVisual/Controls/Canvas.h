@@ -14,14 +14,15 @@ namespace EZVisual{
 
 
     class Canvas : virtual public Backgroundable
-                 , virtual public Marginable{
+                 , virtual public Marginable
+                 , virtual public Paddingable{
 
     public:
         Canvas(rapidjson::Value& json);
         ~Canvas(){}
 
-        void Draw(cv::Mat& target);
-        void Measure();
+        void Draw(cv::Mat& target) const;
+        void Measure(int desired_width, int desired_height);
 
         VisualElementType getType() const;
 
@@ -61,7 +62,7 @@ namespace EZVisual{
 
         vector<vector<Color>> pixels;
 
-        int GetIndex(int x, int y);
+        int GetIndex(int x, int y) const;
 
         std::mutex inner_q_mtx;
         queue<pair<int, int>> inner_q;

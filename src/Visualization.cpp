@@ -3,6 +3,8 @@
 using namespace cv;
 namespace EZVisual{
 
+    const int VERY_BIG_INT = 1000;
+
     Visualization::Visualization(string visual_config){
         fstream input(visual_config, ios::in);
         if(!input.is_open()) throw "Open visual config failed: file not exist.";
@@ -46,12 +48,12 @@ namespace EZVisual{
         while(1){
             if(true){
                 std::unique_lock<std::mutex> lck_measure_and_draw(measure_and_draw_mtx);
-                visual_tree_root->Measure();
+                visual_tree_root->Measure(VERY_BIG_INT, VERY_BIG_INT);
                 std::unique_lock<std::mutex> lck_view(view_mtx);
-                if(view.rows != visual_tree_root->GetHeight() ||
-                    view.cols != visual_tree_root->GetWidth()){
-                    view = Mat::zeros(visual_tree_root->GetHeight(),
-                            visual_tree_root->GetWidth(), CV_8UC3);
+                if(view.rows != visual_tree_root->GetMeasuredHeight() ||
+                    view.cols != visual_tree_root->GetMeasuredWidth()){
+                    view = Mat::zeros(visual_tree_root->GetMeasuredHeight(),
+                            visual_tree_root->GetMeasuredWidth(), CV_8UC3);
                 }
                 background.Cover(view);
                 visual_tree_root->Draw(view);

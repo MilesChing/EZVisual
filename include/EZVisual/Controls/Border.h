@@ -13,8 +13,6 @@ using namespace cv;
 namespace EZVisual{
 
     class Border : virtual public Backgroundable
-                 , virtual public MinWidthable
-                 , virtual public MinHeightable
                  , virtual public Marginable
                  , virtual public Paddingable
                  , virtual public Contentable{
@@ -22,8 +20,8 @@ namespace EZVisual{
         Border(rapidjson::Value& json);
         ~Border();
 
-        void Draw(cv::Mat& target);
-        void Measure();
+        void Draw(cv::Mat& target) const;
+        void Measure(int desired_width, int desired_height);
 
         VisualElementType getType() const;
     };

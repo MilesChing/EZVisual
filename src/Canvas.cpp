@@ -10,6 +10,7 @@ namespace EZVisual{
     Canvas::Canvas(rapidjson::Value& json) :
             Marginable(json),
             Backgroundable(json),
+            Paddingable(json),
             VisualElement(json){
         if(json["LayerCount"].IsInt())
             SetLayerCount(json["LayerCount"].GetInt());
@@ -20,21 +21,75 @@ namespace EZVisual{
         else throw "LayerSize must be set for Canvas.";
     }
 
-    void Canvas::Draw(cv::Mat& target){
-        cv::Mat roi(target, cv::Rect(margin[0], margin[1], layer_width, layer_height));
-        background.Cover(roi);
+    void Canvas::Draw(cv::Mat& target) const{
+        if(measured_height == 0 || measured_width == 0) return;
 
-        for(int i = 0; i < layer_count; ++i)
-            for(int x = 0; x < layer_width; ++x)
-                for(int y = 0; y < layer_height; ++y)
-                    pixels[i][GetIndex(x, y)]
-                        .Cover(target.at<cv::Vec3b>
-                        (y + margin[1], x + margin[0]));
+        if(target.rows < measured_height || target.cols < measured_width)
+            throw "Canvas::Draw() need more space.";
+
+        int real_layer_width = measured_width - margin[0] - padding[0]
+            - margin[2] - padding[2];
+        int real_layer_height = measured_height - margin[1] - padding[1]
+            - margin[3] - padding[3];
+
+        if(real_layer_width > 0 && real_layer_height > 0){
+            cv::Mat roi(target, cv::Rect(margin[0] + padding[0], margin[1] + padding[1],
+                real_layer_width, real_layer_height));
+            background.Cover(roi);
+
+            for(int i = 0; i < layer_count; ++i)
+                for(int x = 0; x < min(layer_width, real_layer_width); ++x)
+                    for(int y = 0; y < min(layer_height, real_layer_height); ++y)
+                        pixels[i][GetIndex(x, y)]
+                            .Cover(roi.at<cv::Vec3b>(y, x));
+        }
     }
 
-    void Canvas::Measure(){
-        width = layer_width + margin[0] + margin[2];
-        height = layer_height + margin[1] + margin[3];
+    void Canvas::Measure(int desired_width, int desired_height){
+        if(desired_width == 0 || desired_height == 0){
+            measured_height = measured_width = 0;
+            return;
+        }
+
+        bool no_space = false;
+
+        int content_desired_width = desired_width - margin[0]
+                - margin[2] - padding[0] - padding[2];
+
+        int content_desired_height = desired_height - margin[1]
+            - margin[3] - padding[1] - padding[3];
+
+        if(width != WRAP_CONTENT && width != FILL_PARENT)
+            content_desired_width = min(content_desired_width,
+                width - padding[0] - padding[2]);
+
+        if(height != WRAP_CONTENT && height != FILL_PARENT)
+            content_desired_height = min(content_desired_height,
+                height - padding[1] - padding[3]);
+
+        if(content_desired_width <= 0 || content_desired_height <= 0)
+            no_space = true;
+        if(no_space) content_desired_width = content_desired_height = 0;
+
+        if(no_space)
+            measured_width = desired_width;
+        else if(width == WRAP_CONTENT)
+            measured_width = min(content_desired_width,
+                layer_width + padding[0] + padding[2])
+                + margin[0] + margin[2];
+        else if(width == FILL_PARENT)
+            measured_width = content_desired_width;
+        else measured_width = width + margin[0] + margin[2];
+
+        if(no_space)
+            measured_height = desired_height;
+        else if(height == WRAP_CONTENT)
+            measured_height = min(content_desired_height,
+                layer_height + padding[1] + padding[3])
+                + margin[1] + margin[3];
+        else if(height == FILL_PARENT)
+            measured_height = content_desired_height;
+        else measured_height = height + margin[1] + margin[3];
     }
 
     VisualElementType Canvas::getType() const{
@@ -98,7 +153,7 @@ namespace EZVisual{
         for(int i = 0; i < pixels.size(); ++i) pixels[i].resize(layer_width * layer_height, 0);
     }
 
-    int Canvas::GetIndex(int x, int y){
+    int Canvas::GetIndex(int x, int y) const{
         return x * layer_height + y;
     }
 

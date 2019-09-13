@@ -8,8 +8,6 @@ using namespace cv;
 namespace EZVisual{
 
     class StackView : virtual public Backgroundable
-                    , virtual public MinWidthable
-                    , virtual public MinHeightable
                     , virtual public Marginable
                     , virtual public Paddingable
                     , virtual public Childrenable
@@ -18,8 +16,8 @@ namespace EZVisual{
         StackView(rapidjson::Value& json);
         ~StackView();
 
-        void Draw(cv::Mat& target);
-        void Measure();
+        void Draw(cv::Mat& target) const;
+        void Measure(int desired_width, int desired_height);
 
         VisualElementType getType() const;
     };

@@ -1,0 +1,39 @@
+{
+    "Title": "EZVisual",
+    "FPS": 40,
+    "Background": "#000000",
+    "Layout": {
+        "Type": "StackView",
+        "Orientation": "Horizontal",
+        "Background": "#181818",
+        "Children": [
+            {
+                "Type": "StackView",
+                "Orientation": "Vertical",
+                "Padding": 20,
+                "Children":[
+                    {   "Type": "PlainText", "Text": "EZVisual", "FontColor": "#6AE856",
+                        "FontSize": 1.6, "FontWeight": 2    },
+                    {   "Type": "PlainText", "Text": "Demo", "Margin" : [0, 0, 0, 16],
+                        "FontColor": "#ffffff", "FontSize": 1, "FontWeight": 2    },
+                    {   "Type": "Border", "Height": 40, "Width": 200, "Background": "#21CCFF", "Margin" : [0, 0, 0, 4]    },
+                    {   "Type": "Border", "Height": 40, "Width": 200, "Background": "#FFDC6B", "Margin" : [0, 0, 0, 4]    },
+                    {   "Type": "Border", "Height": 40, "Width": 200, "Background": "#6AE856", "Margin" : [0, 0, 0, 4]    },
+                    {   "Type": "Border", "Height": 40, "Width": 200, "Background": "#E86C56", "Margin" : [0, 0, 0, 4]    },
+                    {   "Type": "PlainText", "Text": ".MilesChing", "Margin" : [0, 20, 0, 0],
+                        "FontColor": "#FFFFFF", "FontSize": 0.6, "FontWeight": 1,
+                        "FontFamily": 2     }
+                ]
+            },
+
+            {
+                "Type": "Border", "Background": "#777777", "Padding": 1,
+                "Margin": [0, 20, 20, 20],
+                "Content":{
+                    "Type": "Canvas", "LayerHeight": 400, "LayerWidth": 400,
+                    "Background": "#ff000000", "LayerCount": 5, "Id": 16
+                }
+            }
+        ]
+    }
+}

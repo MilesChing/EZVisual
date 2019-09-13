@@ -11,7 +11,6 @@ namespace EZVisual{
             case TYPE_BORDER: return new Border(json);
             case TYPE_STACK_VIEW: return new StackView(json);
             case TYPE_PLAIN_TEXT: return new PlainText(json);
-            case TYPE_AUTO_WRAP_STACK: return new AutoWrapStack(json);
             case TYPE_CANVAS: return new Canvas(json);
         }
 
@@ -123,7 +122,6 @@ namespace EZVisual{
         if(data == "Border") attr = TYPE_BORDER;
         else if(data == "StackView") attr = TYPE_STACK_VIEW;
         else if(data == "PlainText") attr = TYPE_PLAIN_TEXT;
-        else if(data == "AutoWrapStack") attr = TYPE_AUTO_WRAP_STACK;
         else if(data == "Canvas") attr = TYPE_CANVAS;
     }
 

@@ -14,6 +14,9 @@ using namespace rapidjson;
 
 namespace EZVisual{
 
+    const int WRAP_CONTENT = 0;
+    const int FILL_PARENT = -1;
+
     class VisualElement;
 
     enum HorizontalAlignment{
@@ -32,7 +35,6 @@ namespace EZVisual{
         TYPE_BORDER,
         TYPE_STACK_VIEW,
         TYPE_PLAIN_TEXT,
-        TYPE_AUTO_WRAP_STACK,
         TYPE_CANVAS
     };
 

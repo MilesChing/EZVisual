@@ -22,7 +22,7 @@ namespace EZVisual{
         }
 
     protected:
-        Color background;
+        Color background = Color(0);
     };
 
 #endif

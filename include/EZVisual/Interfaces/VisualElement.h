@@ -4,9 +4,6 @@
 #include "rapidjson/document.h"
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/writer.h"
-#include <vector>
-#include <map>
-#include <mutex>
 using namespace std;
 using namespace rapidjson;
 
@@ -18,27 +15,26 @@ namespace EZVisual{
 
     class VisualElement{
     public:
-        virtual void Draw(cv::Mat& target) = 0;
-        virtual void Measure() = 0;
+        virtual void Draw(cv::Mat& target) const = 0;
+        virtual void Measure(int desired_width, int desired_height) = 0;
         virtual VisualElementType getType() const = 0;
 
         VisualElement(rapidjson::Value& json);
         virtual ~VisualElement(){};
 
-        int GetWidth();
-        int GetHeight();
-        int GetId();
+        int GetMeasuredWidth() const;
+        int GetMeasuredHeight() const;
+        int GetId() const;
 
-        HorizontalAlignment GetHorizontalAlignment();
-        VerticalAlignment GetVerticalAlignment();
+        HorizontalAlignment GetHorizontalAlignment() const;
+        VerticalAlignment GetVerticalAlignment() const;
 
         virtual VisualElement* SearchElementById(int id);
 
     protected:
-        int id = -1, width = -1, height = -1;
+        int id = -1, width = WRAP_CONTENT, height = WRAP_CONTENT, measured_width = -1, measured_height = -1;
         HorizontalAlignment horizontal_alignment = Left;
         VerticalAlignment vertical_alignment = Top;
-
     };
 
 
