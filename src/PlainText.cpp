@@ -7,7 +7,7 @@ namespace EZVisual{
         Marginable(json),
         VisualElement(json){}
 
-    void PlainText::Draw(cv::Mat& target) const{
+    void PlainText::Draw(cv::Mat& target){
         if(measured_height == 0 || measured_width == 0) return;
 
         cv::Point origin;
@@ -43,6 +43,12 @@ namespace EZVisual{
             measured_width - margin[0] - margin[2],
             measured_height - margin[1] - margin[3]));
 
+        cv::Point xy;
+        cv::Size sz;
+        content_roi.locateROI(sz, xy);
+        x = xy.x;
+        y = xy.y;
+
         for(int i = 0; i < tmp_mat.rows; ++i)
             for(int j = 0; j < tmp_mat.cols; ++j)
                 if(tmp_mat.at<cv::Vec3b>(i, j)[0] != 0)
@@ -62,7 +68,6 @@ namespace EZVisual{
 
         content_desired_width = max(content_desired_width, 0);
         content_desired_height = max(content_desired_height, 0);
-
 
         auto size = cv::getTextSize(
             text,

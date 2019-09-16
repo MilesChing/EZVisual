@@ -142,4 +142,10 @@ namespace EZVisual{
         else if(data == nameof(Vertical)) attr = Vertical;
     }
 
+    std::time_t GetTimeMs(){
+		std::chrono::time_point<std::chrono::system_clock,std::chrono::microseconds> tp =
+		std::chrono::time_point_cast<std::chrono::microseconds>(std::chrono::system_clock::now());
+		return std::chrono::duration_cast<std::chrono::microseconds>(tp.time_since_epoch()).count();
+	}
+
 }

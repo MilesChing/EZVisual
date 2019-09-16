@@ -42,11 +42,28 @@ namespace EZVisual{
         if(visual_tree_root) delete visual_tree_root;
     }
 
+    void Visualization::OnMouse(int event,int x,int y,int flags,void *ustc){
+        Visualization* tis = (Visualization*)ustc;
+        MouseEventParameter param;
+        param.relative_x = x;
+        param.relative_y = y;
+        switch (event){
+            case CV_EVENT_MOUSEMOVE: param.current_event_type = MouseMoving; break;
+            case CV_EVENT_LBUTTONDOWN: param.current_event_type = MouseLeftDown; break;
+            case CV_EVENT_LBUTTONUP: param.current_event_type = MouseLeftUp; break;
+            case CV_EVENT_RBUTTONDOWN: param.current_event_type = MouseRightDown; break;
+            case CV_EVENT_RBUTTONUP: param.current_event_type = MouseRightUp; break;
+            default: return;
+        }
+        tis->visual_tree_root->CheckMouseEvent(param);
+    }
+
     void Visualization::LaunchWindow(){
         cv::namedWindow(title, CV_WINDOW_AUTOSIZE);
         int interval_ms = 1000 / fps;
-        while(1){
-            if(true){
+        cv::setMouseCallback(title, OnMouse, this);
+        while(true){
+            {
                 std::unique_lock<std::mutex> lck_measure_and_draw(measure_and_draw_mtx);
                 visual_tree_root->Measure(VERY_BIG_INT, VERY_BIG_INT);
                 std::unique_lock<std::mutex> lck_view(view_mtx);
@@ -59,7 +76,6 @@ namespace EZVisual{
                 visual_tree_root->Draw(view);
                 cv::resize(view, view, cv::Size(0, 0), scale_x, scale_y, CV_INTER_LANCZOS4);
             }
-
             cv::imshow(title, view);
             if(cv::waitKey(interval_ms) == 27) break;
         }

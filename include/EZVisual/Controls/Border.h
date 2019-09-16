@@ -20,8 +20,10 @@ namespace EZVisual{
         Border(rapidjson::Value& json);
         ~Border();
 
-        void Draw(cv::Mat& target) const;
+        void Draw(cv::Mat& target);
         void Measure(int desired_width, int desired_height);
+
+        bool CheckMouseEvent(const MouseEventParameter& params);
 
         VisualElementType getType() const;
     };

@@ -10,7 +10,7 @@ namespace EZVisual{
         Orientationable(json),
         VisualElement(json){}
 
-    void StackView::Draw(cv::Mat& target) const{
+    void StackView::Draw(cv::Mat& target){
         if(measured_height == 0 || measured_width == 0) return;
 
         if(target.rows < measured_height || target.cols < measured_width)
@@ -23,6 +23,12 @@ namespace EZVisual{
                 Rect(margin[0], margin[1],
                     this_width, this_height));
             background.Cover(roi_border);
+
+            cv::Point xy;
+            cv::Size sz;
+            roi_border.locateROI(sz, xy);
+            x = xy.x;
+            y = xy.y;
 
             if(this_width <= padding[0] + padding[2] ||
                 this_height <= padding[1] + padding[3])
@@ -130,11 +136,19 @@ namespace EZVisual{
 
     }
 
+    bool StackView::CheckMouseEvent(const MouseEventParameter& params){
+        for(auto child : children)
+            if(child->CheckMouseEvent(params))
+                return true;
+        return this->VisualElement::CheckMouseEvent(params);
+    }
+
     VisualElementType StackView::getType() const{
         return VisualElementType::TYPE_STACK_VIEW;
     }
 
     StackView::~StackView(){
+        this->Childrenable::DeleteChildren();
     }
 
 

@@ -9,9 +9,8 @@ namespace EZVisual{
         Contentable(json),
         VisualElement(json){}
 
-    void Border::Draw(cv::Mat& target) const{
+    void Border::Draw(cv::Mat& target){
         if(measured_height == 0 || measured_width == 0) return;
-
         if(target.rows < measured_height || target.cols < measured_width)
             throw "Border::Draw() need more space.";
 
@@ -22,6 +21,13 @@ namespace EZVisual{
             Mat roi_border(target,
                 Rect(margin[0], margin[1],
                     border_width, border_height));
+
+            cv::Point xy;
+            cv::Size sz;
+            roi_border.locateROI(sz, xy);
+            x = xy.x;
+            y = xy.y;
+
             background.Cover(roi_border);
 
             if(border_width <= padding[0] + padding[2] ||
@@ -101,12 +107,17 @@ namespace EZVisual{
         else measured_height = content_height + padding[1] + padding[3];
     }
 
+    bool Border::CheckMouseEvent(const MouseEventParameter& params){
+        if(content && content->CheckMouseEvent(params)) return true;
+        else return this->VisualElement::CheckMouseEvent(params);
+    }
+
     VisualElementType Border::getType() const{
-       return VisualElementType::TYPE_BORDER;
+        return VisualElementType::TYPE_BORDER;
     }
 
     Border::~Border(){
-        if(content) delete content;
+        this->Contentable::DeleteContent();
     }
 
 }

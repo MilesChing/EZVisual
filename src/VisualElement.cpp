@@ -2,6 +2,7 @@
 #include <string>
 
 using namespace std;
+using namespace cv;
 
 namespace EZVisual{
 
@@ -56,4 +57,51 @@ namespace EZVisual{
         else return NULL;
     }
 
+    int VisualElement::AddMouseListener(const MouseEventType& type, const MouseListener& listener){
+        auto ptr = listeners.begin();
+        for(int i = 0;; ++i){
+            if(ptr != listeners.end() && ptr->first == i) ++ptr;
+            else{
+                listeners.insert(make_pair(i, make_pair(type, listener)));
+                return i;
+            }
+        }
+    }
+
+    bool VisualElement::RemoveMouseListener(int listener_id){
+        auto ptr = listeners.find(listener_id);
+        if(ptr == listeners.end())
+            return false;
+        listeners.erase(ptr);
+        return true;
+    }
+
+    bool VisualElement::CheckMouseEvent(const MouseEventParameter& params){
+        bool in_this = params.relative_x >= x && params.relative_x < x + measured_width
+            && params.relative_y >= y && params.relative_y < y + measured_height;
+        MouseEventParameter rel_tmp(params);
+        rel_tmp.relative_x = params.relative_x - x;
+        rel_tmp.relative_y = params.relative_y - y;
+        if(params.current_event_type == MouseMoving){
+            if(in_this ^ is_mouse_in){
+                if(in_this) CallMouseEvent(MouseEnter, rel_tmp);
+                else CallMouseEvent(MouseLeave, rel_tmp);
+                is_mouse_in = in_this;
+                return true;
+            }
+            else if(in_this) CallMouseEvent(MouseMoving, rel_tmp);
+            else return false;
+        }
+        else if(in_this){
+            CallMouseEvent(params.current_event_type, rel_tmp);
+            return true;
+        }
+        else return false;
+    }
+
+    void VisualElement::CallMouseEvent(const MouseEventType& type, const MouseEventParameter& param){
+        for(auto listener : listeners)
+            if(listener.second.first == type)
+                listener.second.second(param);
+    }
 }

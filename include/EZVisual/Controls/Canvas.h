@@ -21,7 +21,7 @@ namespace EZVisual{
         Canvas(rapidjson::Value& json);
         ~Canvas(){}
 
-        void Draw(cv::Mat& target) const;
+        void Draw(cv::Mat& target);
         void Measure(int desired_width, int desired_height);
 
         VisualElementType getType() const;
@@ -47,9 +47,9 @@ namespace EZVisual{
 
         void PaintCurve(const std::vector<std::pair<int,int>>& points, const Color& color = 0xff000000, int layer_index = 0, float point_size = 0);
 
-        void PaintRect(const pair<int, int>& origin_point, int width, int height, int layer_index = 0, const Color& fill_color = 0, const Color& border_color = 0xff000000, float border_thickness = 1);
+        void PaintRect(const pair<int, int>& origin_point, int width, int height, const Color& fill_color = 0, const Color& border_color = 0xff000000, int layer_index = 0, float border_thickness = 1);
 
-        void PaintCircle(const pair<float, float>& center_point, float r, int layer_index = 0, const Color& fill_color = 0, const Color& border_color = 0xff000000, float border_thickness = 1);
+        void PaintCircle(const pair<float, float>& center_point, float r, const Color& fill_color = 0, const Color& border_color = 0xff000000, int layer_index = 0, float border_thickness = 1);
 
         void PaintLine(const pair<int, int>& a, const pair<int, int>& b, const Color& line_color = 0xff000000, int layer_index = 0, float line_thickness = 1);
 

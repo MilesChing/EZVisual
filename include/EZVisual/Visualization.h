@@ -17,6 +17,7 @@ namespace EZVisual{
         Visualization(string visual_config);
         ~Visualization();
         void LaunchWindow();
+
         template<typename T> void Invoke(int target_id, std::function<void(T*)> operation){
             std::unique_lock<std::mutex> lck_measure_and_draw(measure_and_draw_mtx);
             auto p = visual_tree_root->SearchElementById(target_id);
@@ -34,6 +35,12 @@ namespace EZVisual{
         double scale_x = 1, scale_y = 1;
         VisualElement* visual_tree_root = NULL;
         cv::Mat view;
+
+        //Mouse Event Handler
+        bool buttons[3];
+        time_t buttons_down_time[3];
+
+        static void OnMouse(int event,int x,int y,int flags,void* visualization);
     };
 
 #endif

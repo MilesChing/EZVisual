@@ -4,6 +4,8 @@
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/writer.h"
 #include "opencv2/opencv.hpp"
+#include <chrono>
+#include <ctime>
 using namespace std;
 using namespace rapidjson;
 
@@ -18,6 +20,24 @@ namespace EZVisual{
     const int FILL_PARENT = -1;
 
     class VisualElement;
+
+
+    enum MouseEventType{
+        MouseEnter,
+        MouseLeave,
+        MouseMoving,
+        MouseLeftDown,
+        MouseRightDown,
+        MouseLeftUp,
+        MouseRightUp
+    };
+
+    struct MouseEventParameter{
+        int relative_x;
+        int relative_y;
+        //Left, Right, Middle
+        MouseEventType current_event_type;
+    };
 
     enum HorizontalAlignment{
         Left,
@@ -76,6 +96,9 @@ namespace EZVisual{
     void Convert(const string& data, Orientation& attr);
 
     VisualElement* GetVisualElementFromType(const VisualElementType& type, rapidjson::Value& json);
+
+    std::time_t GetTimeMs();
+
 }
 
 #endif

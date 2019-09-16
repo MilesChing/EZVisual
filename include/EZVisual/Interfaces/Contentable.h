@@ -27,8 +27,13 @@ namespace EZVisual{
             if(this->content) delete content;
             this->content = content;
         }
+
     protected:
         VisualElement* content = NULL;
+
+        void DeleteContent(){
+            if(content) delete content;
+        }
     };
 
 #endif

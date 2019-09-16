@@ -13,16 +13,24 @@ using namespace cv;
 
 int main(){
     try{
-        Visualization vis("EZVisual_Demo.json");
+        Visualization vis("/home/milesching/workspace/EZVisual/demo/EZVisual_Demo.json");
 
         thread t(&Visualization::LaunchWindow, &vis);
 
-        vis.Invoke<Canvas>(16, [](Canvas* canvas){
-            cerr << 0;
-            canvas->PaintCircle(make_pair(150, 171.133), 100, 0, 0x33ff0000, 0xff000000, 10);
-            canvas->PaintCircle(make_pair(250, 171.133), 100, 0, 0x3300ff00, 0xff000000, 10);
-            canvas->PaintCircle(make_pair(200, 257.736), 100, 0, 0x330000ff, 0xff000000, 10);
-            cerr << 1;
+        bool drawing = false;
+
+        vis.Invoke<EZVisual::Canvas>(16, [&drawing](EZVisual::Canvas* canvas){
+            canvas->AddMouseListener(MouseLeftDown, [&drawing](const MouseEventParameter& param){
+                drawing = true;
+            });
+            canvas->AddMouseListener(MouseLeftUp, [&drawing](const MouseEventParameter& param){
+                drawing = false;
+            });
+            canvas->AddMouseListener(MouseMoving, [&drawing, &canvas](const MouseEventParameter& param){
+                if(drawing){
+                    canvas->PaintPixel(make_pair(param.relative_x, param.relative_y), 0xffffffff);
+                }
+            });
         });
 
         t.join();

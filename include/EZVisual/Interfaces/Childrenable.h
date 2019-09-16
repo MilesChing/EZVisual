@@ -36,6 +36,10 @@ namespace EZVisual{
 
     protected:
         vector<VisualElement*> children;
+
+        void DeleteChildren(){
+            for(auto child : children) delete child;
+        }
     };
 
 #endif

@@ -21,7 +21,7 @@ namespace EZVisual{
         else throw "LayerSize must be set for Canvas.";
     }
 
-    void Canvas::Draw(cv::Mat& target) const{
+    void Canvas::Draw(cv::Mat& target){
         if(measured_height == 0 || measured_width == 0) return;
 
         if(target.rows < measured_height || target.cols < measured_width)
@@ -35,6 +35,13 @@ namespace EZVisual{
         if(real_layer_width > 0 && real_layer_height > 0){
             cv::Mat roi(target, cv::Rect(margin[0] + padding[0], margin[1] + padding[1],
                 real_layer_width, real_layer_height));
+
+            cv::Point xy;
+            cv::Size sz;
+            roi.locateROI(sz, xy);
+            x = xy.x;
+            y = xy.y;
+
             background.Cover(roi);
 
             for(int i = 0; i < layer_count; ++i)
@@ -178,7 +185,7 @@ namespace EZVisual{
             PaintCircle(make_pair((float)p.first, (float)p.second), point_size, layer_index, color, 0, 0);
     }
 
-    void Canvas::PaintRect(const pair<int, int>& origin_point, int width, int height, int layer_index, const Color& fill_color, const Color& border_color, float border_thickness){
+    void Canvas::PaintRect(const pair<int, int>& origin_point, int width, int height, const Color& fill_color, const Color& border_color, int layer_index, float border_thickness){
         const int inner_left = origin_point.first + border_thickness;
         const int inner_right = origin_point.first + width - border_thickness;
         const int inner_top = origin_point.second + border_thickness;
@@ -200,7 +207,7 @@ namespace EZVisual{
 
     }
 
-    void Canvas::PaintCircle(const pair<float, float>& center_point, float r, int layer_index, const Color& fill_color, const Color& border_color, float border_thickness){
+    void Canvas::PaintCircle(const pair<float, float>& center_point, float r, const Color& fill_color, const Color& border_color, int layer_index, float border_thickness){
         std::unique_lock<std::mutex> lck(inner_q_mtx);
         while(!inner_q.empty()) inner_q.pop();
         inner_set.clear();

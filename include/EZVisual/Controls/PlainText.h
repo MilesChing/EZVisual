@@ -16,7 +16,7 @@ namespace EZVisual{
         PlainText(rapidjson::Value& json);
         ~PlainText(){};
 
-        void Draw(cv::Mat& target) const;
+        void Draw(cv::Mat& target);
         void Measure(int desired_width, int desired_height);
 
         VisualElementType getType() const;
