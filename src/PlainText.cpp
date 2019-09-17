@@ -8,25 +8,15 @@ namespace EZVisual{
         VisualElement(json){}
 
     void PlainText::Draw(cv::Mat& target){
-        if(measured_height == 0 || measured_width == 0) return;
+        if(!measured_height || !measured_width || !content_width || !content_height) return;
 
-        cv::Point origin;
-
-        int base_height;
-
-        auto size = cv::getTextSize(
-            text,
-            font_family,
-            font_size,
-            font_weight,
-            &base_height
-        );
-
+        static cv::Point origin;
         origin.x = 0;
-        origin.y = size.height;
+        origin.y = text_height;
 
-        cv::Mat tmp_mat = cv::Mat::zeros(size.height + base_height,
-            size.width, CV_8UC3);
+        static cv::Mat tmp_mat;
+        if(tmp_mat.rows != text_height + text_base_line || tmp_mat.cols != text_width)
+            tmp_mat = cv::Mat::zeros(text_height + text_base_line, text_width, CV_8UC3);
         tmp_mat = cv::Scalar(0, 0, 0);
 
         cv::putText(
@@ -39,61 +29,34 @@ namespace EZVisual{
             font_weight
         );
 
-        cv::Mat content_roi(target, Rect(margin[0], margin[1],
-            measured_width - margin[0] - margin[2],
-            measured_height - margin[1] - margin[3]));
-
-        cv::Point xy;
-        cv::Size sz;
-        content_roi.locateROI(sz, xy);
-        x = xy.x;
-        y = xy.y;
-
+        cv::Mat content_roi(target, Rect(margin[0], margin[1], content_width, content_height));
+        UpdateGlobalXY(content_roi);
         for(int i = 0; i < tmp_mat.rows; ++i)
             for(int j = 0; j < tmp_mat.cols; ++j)
                 if(tmp_mat.at<cv::Vec3b>(i, j)[0] != 0)
-                    font_color.Cover(content_roi.at<cv::Vec3b>(margin[1] + i, margin[0] + j));
+                    font_color.Cover(content_roi.at<cv::Vec3b>(i, j));
     }
 
     void PlainText::Measure(int desired_width, int desired_height){
-        int content_desired_width = desired_width - margin[0] - margin[2];
+        this->Marginable::GetFreeSpace(desired_width, desired_height);
+        if(width != WRAP_CONTENT && width != FILL_PARENT) content_width = min(content_width, width);
+        if(height != WRAP_CONTENT && height != FILL_PARENT) content_height = min(content_height, height);
 
-        int content_desired_height = desired_height - margin[1] - margin[3];
-
-        if(width != WRAP_CONTENT && width != FILL_PARENT)
-            content_desired_width = min(content_desired_width, width);
-
-        if(height != WRAP_CONTENT && height != FILL_PARENT)
-            content_desired_height = min(content_desired_height, height);
-
-        content_desired_width = max(content_desired_width, 0);
-        content_desired_height = max(content_desired_height, 0);
-
-        auto size = cv::getTextSize(
-            text,
-            font_family,
-            font_size,
-            font_weight,
-            &base_line_height
-        );
-
-        if(content_desired_width == 0)
+        if(content_width == 0 || content_height == 0){
             measured_width = desired_width;
-        else if(width == WRAP_CONTENT)
-            measured_width = min(content_desired_width, size.width)
-                + margin[0] + margin[2];
-        else if(width == FILL_PARENT)
-            measured_width = content_desired_width;
-        else measured_width = width + margin[0] + margin[2];
-
-        if(content_desired_height == 0)
             measured_height = desired_height;
-        else if(height == WRAP_CONTENT)
-            measured_height = min(content_desired_height, size.height + base_line_height)
-                + margin[1] + margin[3];
-        else if(height == FILL_PARENT)
-            measured_height = content_desired_height;
-        else measured_height = height + margin[1] + margin[3];
+            return;
+        }
+
+        MeasureText();
+        content_width = min(content_width, text_width);
+        content_height = min(content_height, text_height + text_base_line);
+
+        if(width == FILL_PARENT) measured_width = desired_width;
+        else measured_width = content_width + margin[0] + margin[2];
+
+        if(height == FILL_PARENT) measured_height = desired_height;
+        else measured_height = content_height + margin[1] + margin[3];
     }
 
     VisualElementType PlainText::getType() const{

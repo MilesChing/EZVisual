@@ -43,12 +43,27 @@ namespace EZVisual{
             this->font_family = font_family;
         }
 
+        void MeasureText(){
+            auto size = cv::getTextSize(
+                text,
+                font_family,
+                font_size,
+                font_weight,
+                &text_base_line
+            );
+
+            text_width = size.width;
+            text_height = size.height;
+        }
+
     protected:
         Color font_color = Color(0xff000000);
         int font_weight = 1;
         string text = "";
         double font_size = 0.75;
         int font_family = 0;
+
+        int text_height, text_width, text_base_line;
     };
 
 #endif

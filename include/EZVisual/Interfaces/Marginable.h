@@ -33,8 +33,15 @@ namespace EZVisual{
             right = margin[2];
             bottom = margin[3];
         }
+
+        void GetFreeSpace(int desired_width, int desired_height){
+            content_width = max(desired_width - margin[0] - margin[2], 0);
+            content_height = max(desired_height - margin[1] - margin[3], 0);
+        }
+
     protected:
         int margin[4] = {0};
+        int content_width, content_height;
     };
 
 #endif

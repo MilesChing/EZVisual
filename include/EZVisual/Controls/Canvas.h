@@ -14,8 +14,7 @@ namespace EZVisual{
 
 
     class Canvas : virtual public Backgroundable
-                 , virtual public Marginable
-                 , virtual public Paddingable{
+                 , virtual public Marginable{
 
     public:
         Canvas(rapidjson::Value& json);

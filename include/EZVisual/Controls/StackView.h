@@ -22,6 +22,8 @@ namespace EZVisual{
         bool CheckMouseEvent(const MouseEventParameter& params);
 
         VisualElementType getType() const;
+
+    protected:
     };
 
 }

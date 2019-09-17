@@ -44,7 +44,7 @@ namespace EZVisual{
 
         int id = -1, width = WRAP_CONTENT, height = WRAP_CONTENT;
         int measured_width = -1, measured_height = -1;
-        int x = 0, y =  0;
+        int x = 0, y = 0;
 
         HorizontalAlignment horizontal_alignment = Left;
         VerticalAlignment vertical_alignment = Top;
@@ -54,6 +54,8 @@ namespace EZVisual{
         bool is_mouse_in = false;
 
         void CallMouseEvent(const MouseEventType& type, const MouseEventParameter& param);
+
+        void UpdateGlobalXY(const cv::Mat& target);
     };
 
 }

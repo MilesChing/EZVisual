@@ -104,4 +104,13 @@ namespace EZVisual{
             if(listener.second.first == type)
                 listener.second.second(param);
     }
+
+    void VisualElement::UpdateGlobalXY(const cv::Mat& target){
+        static cv::Point xy;
+        static cv::Size sz;
+        target.locateROI(sz, xy);
+        x = xy.x;
+        y = xy.y;
+    }
+
 }
