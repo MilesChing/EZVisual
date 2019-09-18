@@ -23,6 +23,26 @@ namespace EZVisual{
             }
         }
 
+        /**Get the count of children.
+         *
+         * @ret Count of children.
+         */
+        int GetChildrenCount() const{
+            return children.size();
+        }
+
+        /**@brief Get a child of this element by index.
+         *
+         * Get a child of this element by index. Ensure the desired type is exactly correct when calling this, or you may get a std::bad_cast exception.
+         *
+         * @param index Index of the child. Must fall in [0, ChildrenCount).
+         * @param T Desired type of the child.
+         * @ret Pointer to the child whose index is i.
+         */
+        template<typename T> T* GetChild(int index) const{
+            return dynamic_cast<T*>(children[index]);
+        }
+
         VisualElement* SearchElementById(int id){
             if(id == this->id) return this;
 

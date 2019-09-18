@@ -19,10 +19,7 @@ namespace EZVisual{
                 font_family = json["FontFamily"].GetInt();
         }
 
-        /**Set text for this element.
-         *
-         * @param text Text to be set for.
-         */
+        /**Set text for this element.*/
         void SetText(const char* text){
             this->text = string(text);
         }
@@ -61,8 +58,49 @@ namespace EZVisual{
          * @param font_family Font family to be set for.
          */
         void SetFontFamily(int font_family){
-            if(font_family == this->font_family) return;
             this->font_family = font_family;
+        }
+
+        /**Get text of this element.
+         *
+         * @ret Text of this element.
+         */
+        string GetText(){
+            return string(text);
+        }
+
+        /**Get font size of this element.
+         *
+         * @ret Font size of this element.
+         */
+        double SetFontSize(){
+            return font_size;
+        }
+
+        /**Get font color of this element.
+         *
+         * @ret Font color of this element.
+         */
+        Color GetFontColor(){
+            return font_color;
+        }
+
+        /**Get font weight of this element.
+         *
+         * @ret Font weight of this element.
+         */
+        int GetFontWeight(){
+            return font_weight;
+        }
+
+        /**@brief Get font family of this element.
+         *
+         * Get font family of this element. Font family is an integer falls in [0, 7]. Visit https://docs.opencv.org/2.4.13.6/modules/core/doc/drawing_functions.html#initfont for details.
+         *
+         * @ret font_family Font family of this element.
+         */
+        int GetFontFamily(){
+            return font_family;
         }
 
         void MeasureText(){

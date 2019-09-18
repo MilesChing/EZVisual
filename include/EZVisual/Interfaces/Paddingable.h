@@ -57,12 +57,12 @@ namespace EZVisual{
             bottom = padding[3];
         }
 
+    protected:
         void GetFreeSpace(int desired_width, int desired_height){
             border_width = max(desired_width - padding[0] - padding[2], 0);
             border_height = max(desired_height - padding[1] - padding[3], 0);
         }
 
-    protected:
         int padding[4] = {0};
         int border_width, border_height;
     };

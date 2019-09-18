@@ -32,6 +32,18 @@ namespace EZVisual{
             this->content = content;
         }
 
+        /**@brief Get content of a visual element.
+         *
+         * Get content of a visual element. Return NULL if this element doesn't have a content. Ensure the desired type is exactly correct when calling this, or you may get a std::bad_cast exception.
+         *
+         * @param T Desired type of the content.
+         * @ret Pointer to the content.
+         */
+        template<typename T> T* GetContent() const{
+            if(content) return dynamic_cast<T*>(content);
+            else return NULL;
+        }
+
     protected:
         VisualElement* content = NULL;
 
