@@ -20,6 +20,17 @@ namespace EZVisual{
             }
         }
 
+        /**@brief Set the margin for a visual element.
+         *
+         * Set margin for a visual element. Margin create space around an element, outside of any defined borders.
+         *
+         * Margin will be firstly considered when we are measuring the size of an element. Which means that margin will always occupy the space provided to the element at its full size until there is no room for the element to display.
+         *
+         * @param left Size of the Left margin.
+         * @param right Size of the right margin.
+         * @param top Size of the top margin.
+         * @param bottom Size of the bottom margin.
+         */
         void SetMargin(int left, int top, int right, int bottom){
             margin[0] = left;
             margin[1] = top;
@@ -27,6 +38,17 @@ namespace EZVisual{
             margin[3] = bottom;
         }
 
+        /**@brief Get the margin of a visual element.
+         *
+         * Get the margin of a visual element. Margin create space around an element, outside of any defined borders.
+         *
+         * Margin will be firstly considered when we are measuring the size of an element. Which means that margin will always occupy the space provided to the element at its full size until there is no room for the element to display.
+         *
+         * @param left Size of the Left margin.
+         * @param right Size of the right margin.
+         * @param top Size of the top margin.
+         * @param bottom Size of the bottom margin.
+         */
         void GetMargin(int& left, int& top, int& right, int& bottom) const{
             left = margin[0];
             top = margin[1];

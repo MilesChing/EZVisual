@@ -6,6 +6,7 @@ namespace EZVisual{
 #define _EZVISUAL_PADDINGABLE_
     class Paddingable : virtual public VisualElement{
     public:
+
         Paddingable(rapidjson::Value& json) : VisualElement(json){
             if(json["Padding"].IsArray()){
                 auto mg = json["Padding"].GetArray();
@@ -20,6 +21,17 @@ namespace EZVisual{
             }
         }
 
+        /**@brief Set the margin for a visual element.
+         *
+         * Set the margin for a visual element. Padding create space inside a container, it defines the space between the container and its content or child.
+         *
+         * Padding will be firstly considered when we are measuring the size of a content or child of a container. Which means that padding will always occupy the space provided by a container at its full size until there is no room for the content to display.
+         *
+         * @param left Size of the Left padding.
+         * @param right Size of the right padding.
+         * @param top Size of the top padding.
+         * @param bottom Size of the bottom padding.
+         */
         void SetPadding(int left, int top, int right, int bottom){
             padding[0] = left;
             padding[1] = top;
@@ -27,6 +39,17 @@ namespace EZVisual{
             padding[3] = bottom;
         }
 
+        /**@brief Get the margin of a visual element.
+         *
+         * Get the margin of a visual element. Padding create space inside a container, it defines the space between the container and its content or child.
+         *
+         * Padding will be firstly considered when we are measuring the size of a content or child of a container. Which means that padding will always occupy the space provided by a container at its full size until there is no room for the content to display.
+         *
+         * @param left Size of the Left padding.
+         * @param right Size of the right padding.
+         * @param top Size of the top padding.
+         * @param bottom Size of the bottom padding.
+         */
         void GetPadding(int& left, int& top, int& right, int& bottom) const{
             left = padding[0];
             top = padding[1];

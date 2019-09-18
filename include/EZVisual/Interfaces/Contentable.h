@@ -22,6 +22,10 @@ namespace EZVisual{
             return NULL;
         }
 
+        /**@brief Set content for a visual element.
+         *
+         * Set content for a visual element. An element may only have one content, so the old content will be freed immediately if a new one is set.
+         */
         void SetContent(VisualElement* content){
             if(this->content == content) return;
             if(this->content) delete content;
