@@ -1,4 +1,5 @@
 #include "EZVisual/Controls/Canvas.h"
+#include <cmath>
 
 namespace EZVisual{
 
@@ -140,7 +141,7 @@ namespace EZVisual{
     void Canvas::PaintCurve(const std::vector<std::pair<int,int>>& points, const Color& color, int layer_index, float point_size){
         if(point_size == 0) for(auto p : points) PaintPixel(p, color, layer_index);
         else for(auto p : points) for(auto p : points)
-            PaintCircle(make_pair((float)p.first, (float)p.second), point_size, layer_index, color, 0, 0);
+            PaintCircle(make_pair((float)p.first, (float)p.second), point_size, color, 0, layer_index, 0);
     }
 
     void Canvas::PaintRect(const pair<int, int>& origin_point, int width, int height, const Color& fill_color, const Color& border_color, int layer_index, float border_thickness){
@@ -204,35 +205,19 @@ namespace EZVisual{
 
     void Canvas::PaintLine(const pair<int, int>& a, const pair<int, int>& b, const Color& line_color, int layer_index, float line_thickness){
         if(b.first == a.first){
+            return;
             int fr = min(a.second, b.second);
             int to = max(a.second, b.second);
-            for(int i = fr; i <= to; ++i)
+            for(int i = fr; i <= to; ++i){
                 if(line_thickness == 0) PaintPixel(make_pair(a.first, i), line_color, layer_index);
-                else PaintCircle(make_pair(a.first, i), line_thickness, layer_index, line_color, 0, 0);
-
-            return;
-        }
-        else if(b.second == a.second){
-            int fr = min(a.first, b.first);
-            int to = max(a.first, b.first);
-            for(int i = fr; i <= to; ++i)
-                if(line_thickness == 0) PaintPixel(make_pair(a.second, i), line_color, layer_index);
-                else PaintCircle(make_pair(a.second, i), line_thickness, layer_index, line_color, 0, 0);
-
+                else PaintCircle(make_pair(a.first, i), line_thickness, line_color, 0, layer_index, 0);
+            }
             return;
         }
 
-        double step_x, step_y;
         const double max_step = 0.5;
-
-        if(abs(b.second - a.second) > abs(b.first - a.first)){
-            step_x = max_step * (b.first - a.first) / (b.second - a.second);
-            step_y = max_step;
-        }
-        else{
-            step_y = max_step * (b.second - a.second) / (b.first - a.first);
-            step_x = max_step;
-        }
+        double k = 1.0 * (b.second - a.second) / (b.first - a.first);
+        double step_x = max_step * cos(k), step_y = max_step * sin(k);
 
         double tx = a.first, ty = a.second;
         int kx = -1, ky = -1;
@@ -241,7 +226,7 @@ namespace EZVisual{
                 kx = round(tx);
                 ky = round(ty);
                 if(line_thickness == 0) PaintPixel(make_pair(kx, ky), line_color, layer_index);
-                else PaintCircle(make_pair(kx, ky), line_thickness, layer_index, line_color, 0, 0);
+                else PaintCircle(make_pair(kx, ky), line_thickness, line_color, 0, layer_index, 0);
             }
             tx += step_x;
             ty += step_y;
