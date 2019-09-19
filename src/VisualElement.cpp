@@ -99,7 +99,8 @@ namespace EZVisual{
         else return false;
     }
 
-    void VisualElement::CallMouseEvent(const MouseEventType& type, const MouseEventParameter& param){
+    void VisualElement::CallMouseEvent(const MouseEventType& type, MouseEventParameter& param){
+        param.sender = this;
         for(auto listener : listeners)
             if(listener.second.first == type)
                 listener.second.second(param);

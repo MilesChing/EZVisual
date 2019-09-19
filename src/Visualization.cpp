@@ -59,27 +59,40 @@ namespace EZVisual{
     }
 
     void Visualization::LaunchWindow(){
-        cv::namedWindow(title, CV_WINDOW_AUTOSIZE);
-        int interval_ms = 1000 / fps;
-        cv::setMouseCallback(title, OnMouse, this);
-        while(true){
-            {
-                std::unique_lock<std::mutex> lck_measure_and_draw(measure_and_draw_mtx);
-                visual_tree_root->Measure(VERY_BIG_INT, VERY_BIG_INT);
-                std::unique_lock<std::mutex> lck_view(view_mtx);
-                if(view.rows != visual_tree_root->GetMeasuredHeight() ||
-                    view.cols != visual_tree_root->GetMeasuredWidth()){
-                    view = Mat::zeros(visual_tree_root->GetMeasuredHeight(),
-                            visual_tree_root->GetMeasuredWidth(), CV_8UC3);
+        try{
+            cv::namedWindow(title, CV_WINDOW_AUTOSIZE);
+            int interval_ms = 1000 / fps;
+            cv::setMouseCallback(title, OnMouse, this);
+            while(true){
+                {
+                    std::unique_lock<std::mutex> lck_measure_and_draw(measure_and_draw_mtx);
+                    visual_tree_root->Measure(VERY_BIG_INT, VERY_BIG_INT);
+                    std::unique_lock<std::mutex> lck_view(view_mtx);
+                    if(view.rows != visual_tree_root->GetMeasuredHeight() ||
+                        view.cols != visual_tree_root->GetMeasuredWidth()){
+                        view = Mat::zeros(visual_tree_root->GetMeasuredHeight(),
+                                visual_tree_root->GetMeasuredWidth(), CV_8UC3);
+                    }
+                    background.Cover(view);
+                    visual_tree_root->Draw(view);
+                    cv::resize(view, view, cv::Size(0, 0), scale_x, scale_y, CV_INTER_LANCZOS4);
                 }
-                background.Cover(view);
-                visual_tree_root->Draw(view);
-                cv::resize(view, view, cv::Size(0, 0), scale_x, scale_y, CV_INTER_LANCZOS4);
+                cv::imshow(title, view);
+                if(cv::waitKey(interval_ms) == 27) break;
             }
-            cv::imshow(title, view);
-            if(cv::waitKey(interval_ms) == 27) break;
+            cv::destroyWindow(title);
         }
-        cv::destroyWindow(title);
+        catch(const char* s){
+            cerr << s << endl;
+        }
+        catch(string s){
+            cerr << s << endl;
+        }
+    }
+
+    void Visualization::Invoke(const function<void(Visualization*)>& operation){
+        std::unique_lock<std::mutex> lck_measure_and_draw(measure_and_draw_mtx);
+        operation(this);
     }
 
 }

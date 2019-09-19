@@ -37,6 +37,7 @@ namespace EZVisual{
         int relative_y;
         //Left, Right, Middle
         MouseEventType current_event_type;
+        VisualElement* sender;
     };
 
     enum HorizontalAlignment{

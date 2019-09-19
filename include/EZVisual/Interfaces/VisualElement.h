@@ -69,7 +69,7 @@ namespace EZVisual{
 
         bool is_mouse_in = false;
 
-        void CallMouseEvent(const MouseEventType& type, const MouseEventParameter& param);
+        void CallMouseEvent(const MouseEventType& type, MouseEventParameter& param);
 
         void UpdateGlobalXY(const cv::Mat& target);
     };

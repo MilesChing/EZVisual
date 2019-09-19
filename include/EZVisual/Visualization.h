@@ -23,20 +23,28 @@ namespace EZVisual{
          */
         void LaunchWindow();
 
-        /**@brief Get specific visual element 't' using target_id and do operation(t).
+        /**@brief Get specific visual element 't' using target_id.
          *
-         * Get specific visual element 't' using target_id and do operation(t). Ensure the desired type is exactly correct when calling this, or you may get a std::bad_cast exception.
+         * Get specific visual element 't' using target_id. Ensure the desired type is exactly correct when calling this, or you may get a std::bad_cast exception.
          *
          * @param target_id Id of the target visual element.
-         * @param operation Callable object which will be called with the target element as an input argument.
-         * @param T Desired type of the visual element.
+         * @param T Desired type of the target visual element.
          */
-        template<typename T> void Invoke(int target_id, std::function<void(T*)> operation){
-            std::unique_lock<std::mutex> lck_measure_and_draw(measure_and_draw_mtx);
+        template<typename T> T* GetVisualElement(int target_id) const{
             auto p = visual_tree_root->SearchElementById(target_id);
             if(!p) throw "Id not found.";
-            else operation(dynamic_cast<T*>(p));
+            else return dynamic_cast<T*>(p);
         }
+
+        /**@brief Invoke a function on the UI.
+         *
+         * Do an action on the UI. UI tasks including drawing and measuring runs on a seperate thread and shouldn't be modified freely. The only way to update attributes and preferences of visual elements is to invoke a function by calling this.
+         *
+         * @param operation Function to be invoked.
+         * @warning Don't call Invoke recursively in "operation". It will cause a dead lock.
+         */
+        void Invoke(const function<void(Visualization*)>& operation);
+
     private:
         std::mutex view_mtx, measure_and_draw_mtx;
 
