@@ -204,32 +204,19 @@ namespace EZVisual{
     }
 
     void Canvas::PaintLine(const pair<int, int>& a, const pair<int, int>& b, const Color& line_color, int layer_index, float line_thickness){
-        if(b.first == a.first){
-            return;
-            int fr = min(a.second, b.second);
-            int to = max(a.second, b.second);
-            for(int i = fr; i <= to; ++i){
-                if(line_thickness == 0) PaintPixel(make_pair(a.first, i), line_color, layer_index);
-                else PaintCircle(make_pair(a.first, i), line_thickness, line_color, 0, layer_index, 0);
-            }
-            return;
-        }
-
-        const double max_step = 0.5;
-        double k = 1.0 * (b.second - a.second) / (b.first - a.first);
-        double step_x = max_step * cos(k), step_y = max_step * sin(k);
-
-        double tx = a.first, ty = a.second;
-        int kx = -1, ky = -1;
-        while(fabs(tx - a.first) <= abs(b.first - a.first)){
-            if(round(tx) != kx || round(ty) != ky){
-                kx = round(tx);
-                ky = round(ty);
-                if(line_thickness == 0) PaintPixel(make_pair(kx, ky), line_color, layer_index);
-                else PaintCircle(make_pair(kx, ky), line_thickness, line_color, 0, layer_index, 0);
-            }
-            tx += step_x;
-            ty += step_y;
+        const double angle = atan2(b.second - a.second, b.first - a.first);
+        const double sina = sin(angle);
+        const double cosa = cos(angle);
+        const double step = 0.5;
+        const double stepx = step * cosa;
+        const double stepy = step * sina;
+        const double length = sqrt((b.second - a.second) * (b.second - a.second)
+            + (b.first - a.first) * (b.first - a.first));
+        double x = a.first - stepx, y = a.second - stepy;
+        for(double t = 0; t <= length; t+=step){
+            int tx = (int)round(x += stepx);
+            int ty = (int)round(y += stepy);
+            PaintCircle(make_pair(tx, ty), line_thickness, line_color, 0, layer_index, 0);
         }
     }
 

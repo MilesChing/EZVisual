@@ -18,9 +18,11 @@ EZVisual::Canvas* canvas;
 int current_index = 0;
 EZVisual::Color current_color;
 bool drawing = false;
+bool first_point = true;
+pair<int, int> current_point;
 
 //Check this path if you get a "file not exist" exception.
-string visual_profile_path = "EZVisual_Demo.json";
+string visual_profile_path = "../demo/EZVisual_Demo.json";
 
 int main(){
     //Create visualization object
@@ -62,18 +64,31 @@ int main(){
         //Set drawing mode when left button pushed.
         canvas->AddMouseListener(MouseLeftDown, [&](const EZVisual::MouseEventParameter& param){
             drawing = true;
+            first_point = true;
         });
 
         canvas->AddMouseListener(MouseLeftUp, [&](const EZVisual::MouseEventParameter& param){
             drawing = false;
+            first_point = false;
         });
 
         //Draw points
         canvas->AddMouseListener(MouseMoving, [&](const EZVisual::MouseEventParameter& param){
             if(!drawing) return;
-            vis.Invoke([&](Visualization* visualization){
-                canvas->PaintCircle(make_pair(param.relative_x, param.relative_y), 2, current_color, 0, 0, 0);
-            });
+            if(first_point){
+                vis.Invoke([&](Visualization* visualization){
+                    canvas->PaintCircle(make_pair(param.relative_x, param.relative_y),
+                        2, current_color, 0, 0, 0);
+                });
+                first_point = false;
+            }
+            else{
+                vis.Invoke([&](Visualization* visualization){
+                    canvas->PaintLine(make_pair(param.relative_x, param.relative_y),
+                        current_point, current_color, 0, 2.0);
+                });
+            }
+            current_point = make_pair(param.relative_x, param.relative_y);
         });
     });
 
