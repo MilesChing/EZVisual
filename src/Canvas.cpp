@@ -167,31 +167,22 @@ namespace EZVisual{
     }
 
     void Canvas::PaintCircle(const pair<float, float>& center_point, float r, const Color& fill_color, const Color& border_color, int layer_index, float border_thickness){
-        std::unique_lock<std::mutex> lck(inner_q_mtx);
-        while(!inner_q.empty()) inner_q.pop();
-        inner_set.clear();
-        inner_q.push(make_pair((int)center_point.first, (int)center_point.second));
-        inner_set.insert(make_pair((int)center_point.first, (int)center_point.second));
-        while(!inner_q.empty()){
-            const int cx = inner_q.front().first, cy = inner_q.front().second;
-            inner_q.pop();
-            for(int x = 0; x < dxnum; ++x)
-                for(int y = 0; y < dynum; ++y){
-                    const int tx = cx + dx[x], ty = cy + dy[y];
-                    const double dis = sqrt(((double)center_point.first - tx)*
-                        ((double)center_point.first - tx) +
-                        ((double)center_point.second - ty)*
-                        ((double)center_point.second - ty));
-                    if(fabs(dis - r) < border_thickness)
-                        PaintPixel(make_pair(tx, ty), border_color, layer_index);
-                    else if(dis < r)
-                        PaintPixel(make_pair(tx, ty), fill_color, layer_index);
-                    else continue;
-                    if(inner_set.find(make_pair(tx, ty)) == inner_set.end()){
-                        inner_q.push(make_pair(tx, ty));
-                        inner_set.insert(make_pair(tx, ty));
-                    }
-                }
+        if(r < 0) throw "Radius not legal.";
+        const double fake_r = r + border_thickness;
+        const int txb = (center_point.first - fake_r);
+        const int txe = (center_point.first + fake_r);
+        for(int tx = txb; tx <= txe; ++tx){
+            double dy = sqrt(fake_r * fake_r - (tx - center_point.first) * (tx - center_point.first));
+            const int tyb = round(center_point.second - dy);
+            const int tye = round(center_point.second + dy);
+            for(int ty = tyb; ty <= tye; ++ty){
+                const double dis = sqrt(((double)center_point.first - tx)*
+                                        ((double)center_point.first - tx) +
+                                        ((double)center_point.second - ty)*
+                                        ((double)center_point.second - ty));
+                if(fabs(dis - r) < border_thickness) PaintPixel(make_pair(tx, ty), border_color, layer_index);
+                else if(dis < r) PaintPixel(make_pair(tx, ty), fill_color, layer_index);
+            }
         }
     }
 
@@ -207,16 +198,20 @@ namespace EZVisual{
         const double angle = atan2(b.second - a.second, b.first - a.first);
         const double sina = sin(angle);
         const double cosa = cos(angle);
-        const double step = 0.5;
+        const double step = 1;
         const double stepx = step * cosa;
         const double stepy = step * sina;
         const double length = sqrt((b.second - a.second) * (b.second - a.second)
             + (b.first - a.first) * (b.first - a.first));
         double x = a.first - stepx, y = a.second - stepy;
+        int otx = a.first - 100, oty = a.second - 100;
         for(double t = 0; t <= length; t+=step){
             int tx = (int)round(x += stepx);
             int ty = (int)round(y += stepy);
-            PaintCircle(make_pair(tx, ty), line_thickness, line_color, 0, layer_index, 0);
+            if(tx != otx || ty != oty)
+                PaintCircle(make_pair(tx, ty), line_thickness, line_color, 0, layer_index, 0);
+            otx = tx;
+            oty = ty;
         }
     }
 

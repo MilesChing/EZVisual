@@ -76,6 +76,7 @@ int main(){
         canvas->AddMouseListener(MouseMoving, [&](const EZVisual::MouseEventParameter& param){
             if(!drawing) return;
             if(first_point){
+                //At the first point after pointer down, draw a circle.
                 vis.Invoke([&](Visualization* visualization){
                     canvas->PaintCircle(make_pair(param.relative_x, param.relative_y),
                         2, current_color, 0, 0, 0);
@@ -83,6 +84,7 @@ int main(){
                 first_point = false;
             }
             else{
+                //At other points, draw line segments.
                 vis.Invoke([&](Visualization* visualization){
                     canvas->PaintLine(make_pair(param.relative_x, param.relative_y),
                         current_point, current_color, 0, 2.0);
