@@ -8,7 +8,7 @@ EZVisual has the following features:
 - Thread-safe dynamic UI updates;
 - Free 2D drawing with alpha channels;
 
-![EZVisual Demo](https://milesching.github.io/images/Others/EZVisual_Demo.png)
+![EZVisual Demo](https://milesching.github.io/images/Others/EZVisual_Demo.gif)
 
 ## Build EZVisual in Linux
 
