@@ -44,18 +44,17 @@ namespace EZVisual{
 
     void Visualization::OnMouse(int event,int x,int y,int flags,void *ustc){
         Visualization* tis = (Visualization*)ustc;
-        MouseEventParameter param;
-        param.relative_x = x;
-        param.relative_y = y;
+        tis->mouse_event_param.relative_x = x;
+        tis->mouse_event_param.relative_y = y;
         switch (event){
-            case CV_EVENT_MOUSEMOVE: param.current_event_type = MouseMoving; break;
-            case CV_EVENT_LBUTTONDOWN: param.current_event_type = MouseLeftDown; break;
-            case CV_EVENT_LBUTTONUP: param.current_event_type = MouseLeftUp; break;
-            case CV_EVENT_RBUTTONDOWN: param.current_event_type = MouseRightDown; break;
-            case CV_EVENT_RBUTTONUP: param.current_event_type = MouseRightUp; break;
+            case CV_EVENT_MOUSEMOVE: tis->mouse_event_param.current_event_type = MouseMoving; break;
+            case CV_EVENT_LBUTTONDOWN: tis->mouse_event_param.current_event_type = MouseLeftDown; break;
+            case CV_EVENT_LBUTTONUP: tis->mouse_event_param.current_event_type = MouseLeftUp; break;
+            case CV_EVENT_RBUTTONDOWN: tis->mouse_event_param.current_event_type = MouseRightDown; break;
+            case CV_EVENT_RBUTTONUP: tis->mouse_event_param.current_event_type = MouseRightUp; break;
             default: return;
         }
-        tis->visual_tree_root->CheckMouseEvent(param);
+        tis->visual_tree_root->CheckMouseEvent(tis->mouse_event_param);
     }
 
     void Visualization::LaunchWindow(){

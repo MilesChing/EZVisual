@@ -168,6 +168,10 @@ namespace EZVisual{
 
     void Canvas::PaintCircle(const pair<float, float>& center_point, float r, const Color& fill_color, const Color& border_color, int layer_index, float border_thickness){
         if(r < 0) throw "Radius not legal.";
+        if(r == 0){
+            PaintPixel(make_pair((int)round(center_point.first), (int)round(center_point.second)), fill_color, layer_index);
+            return;
+        }
         const double fake_r = r + border_thickness;
         const int txb = (center_point.first - fake_r);
         const int txe = (center_point.first + fake_r);
@@ -195,23 +199,27 @@ namespace EZVisual{
     }
 
     void Canvas::PaintLine(const pair<int, int>& a, const pair<int, int>& b, const Color& line_color, int layer_index, float line_thickness){
-        const double angle = atan2(b.second - a.second, b.first - a.first);
-        const double sina = sin(angle);
-        const double cosa = cos(angle);
-        const double step = 1;
-        const double stepx = step * cosa;
-        const double stepy = step * sina;
-        const double length = sqrt((b.second - a.second) * (b.second - a.second)
-            + (b.first - a.first) * (b.first - a.first));
-        double x = a.first - stepx, y = a.second - stepy;
-        int otx = a.first - 100, oty = a.second - 100;
-        for(double t = 0; t <= length; t+=step){
-            int tx = (int)round(x += stepx);
-            int ty = (int)round(y += stepy);
-            if(tx != otx || ty != oty)
-                PaintCircle(make_pair(tx, ty), line_thickness, line_color, 0, layer_index, 0);
-            otx = tx;
-            oty = ty;
+        const int dx = a.first - b.first;
+        const int dy = a.second - b.second;
+        if(!dy && !dx){
+            PaintCircle(a, line_thickness, line_color, 0, layer_index, 0);
+            return;
+        }
+        if(abs(dy) > abs(dx)){
+            const double k = ((double)dx) / dy;
+            const double t = b.first - k * b.second;
+            const int d = dy > 0 ? -1 : 1;
+            for(int y = a.second; y != b.second; y += d)
+                PaintCircle(make_pair((int)round(k*y+t), y),
+                    line_thickness, line_color, 0, layer_index, 0);
+        }
+        else{
+            const double k = ((double)dy) / dx;
+            const double t = b.second - k * b.first;
+            const int d = dx > 0 ? -1 : 1;
+            for(int x = a.first; x != b.first; x += d)
+                PaintCircle(make_pair(x, (int)round(k*x+t)),
+                    line_thickness, line_color, 0, layer_index, 0);
         }
     }
 

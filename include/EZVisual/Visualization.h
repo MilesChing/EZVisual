@@ -60,6 +60,7 @@ namespace EZVisual{
         //Mouse Event Handler
         bool buttons[3];
         time_t buttons_down_time[3];
+        MouseEventParameter mouse_event_param;
 
         static void OnMouse(int event,int x,int y,int flags,void* visualization);
     };
