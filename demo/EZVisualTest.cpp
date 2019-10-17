@@ -66,8 +66,13 @@ int main(){
             drawing = true;
             first_point = true;
         });
-
+        //Set drawing mode when left button released.
         canvas->AddMouseListener(MouseLeftUp, [&](const EZVisual::MouseEventParameter& param){
+            drawing = false;
+            first_point = false;
+        });
+        //Set drawing mode when pointer leaved.
+        canvas->AddMouseListener(MouseLeave, [&](const EZVisual::MouseEventParameter& param){
             drawing = false;
             first_point = false;
         });
