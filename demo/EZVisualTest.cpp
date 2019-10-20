@@ -13,8 +13,8 @@ using namespace rapidjson;
 using namespace EZVisual;
 using namespace cv;
 
-EZVisual::Border* borders[4];
 EZVisual::Canvas* canvas;
+EZVisual::Border* borders[4];
 int current_index = 0;
 EZVisual::Color current_color;
 bool drawing = false;
@@ -25,7 +25,6 @@ pair<int, int> current_point;
 string visual_profile_path = "../demo/EZVisual_Demo.json";
 
 int main(){
-    /*
     //Create visualization object
     Visualization vis(visual_profile_path);
     //Launch up a window
@@ -41,17 +40,16 @@ int main(){
             borders[i]->MouseLeftPressed += [&](const EZVisual::MouseEventParameter& param){
                 //Don't use i here
                 if(current_index == param.sender->GetId() - 10) return;
+                int old_idx = current_index;
+                current_index = param.sender->GetId() - 10;
                 //We need another Invoke because these codes are in a listener
                 //Thess invoking won't cause deadlock
                 //Use vis not visualization here
                 vis.Invoke([&](Visualization* visualization){
-                    Border* target = visualization->GetVisualElement<Border>(current_index);
+                    Border* target = visualization->GetVisualElement<Border>(old_idx);
                     target->SetBackground(0);
-                });
-                current_index = param.sender->GetId() - 10;
-                //Update the color of the selected border
-                vis.Invoke([&](Visualization* visualization){
-                    Border* target = visualization->GetVisualElement<Border>(current_index);
+                    //Update the color of the selected border
+                    target = visualization->GetVisualElement<Border>(current_index);
                     target->SetBackground(0xffffffff);
                     target = visualization->GetVisualElement<Border>(current_index + 10);
                     current_color = target->GetBackground();
@@ -100,8 +98,7 @@ int main(){
         };
     });
 
-    //Window will be waiting for key 27 by default
+    //The window will be waiting for key 27 by default
     t.join();
-    */
     return 0;
 }
