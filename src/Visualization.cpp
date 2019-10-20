@@ -48,10 +48,10 @@ namespace EZVisual{
         tis->mouse_event_param.relative_y = y;
         switch (event){
             case CV_EVENT_MOUSEMOVE: tis->mouse_event_param.current_event_type = MouseMoving; break;
-            case CV_EVENT_LBUTTONDOWN: tis->mouse_event_param.current_event_type = MouseLeftDown; break;
-            case CV_EVENT_LBUTTONUP: tis->mouse_event_param.current_event_type = MouseLeftUp; break;
-            case CV_EVENT_RBUTTONDOWN: tis->mouse_event_param.current_event_type = MouseRightDown; break;
-            case CV_EVENT_RBUTTONUP: tis->mouse_event_param.current_event_type = MouseRightUp; break;
+            case CV_EVENT_LBUTTONDOWN: tis->mouse_event_param.current_event_type = MouseLeftPressed; break;
+            case CV_EVENT_LBUTTONUP: tis->mouse_event_param.current_event_type = MouseLeftReleased; break;
+            case CV_EVENT_RBUTTONDOWN: tis->mouse_event_param.current_event_type = MouseRightPressed; break;
+            case CV_EVENT_RBUTTONUP: tis->mouse_event_param.current_event_type = MouseRightReleased; break;
             default: return;
         }
         tis->visual_tree_root->CheckMouseEvent(tis->mouse_event_param);

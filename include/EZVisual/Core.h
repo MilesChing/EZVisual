@@ -23,13 +23,13 @@ namespace EZVisual{
 
 
     enum MouseEventType{
-        MouseEnter,
-        MouseLeave,
+        MouseEntered,
+        MouseLeaved,
         MouseMoving,
-        MouseLeftDown,
-        MouseRightDown,
-        MouseLeftUp,
-        MouseRightUp
+        MouseLeftPressed,
+        MouseRightPressed,
+        MouseLeftReleased,
+        MouseRightReleased
     };
 
     struct MouseEventParameter{

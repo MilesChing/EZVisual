@@ -25,6 +25,7 @@ pair<int, int> current_point;
 string visual_profile_path = "../demo/EZVisual_Demo.json";
 
 int main(){
+    /*
     //Create visualization object
     Visualization vis(visual_profile_path);
     //Launch up a window
@@ -37,7 +38,7 @@ int main(){
             borders[i] = visualization->GetVisualElement<Border>(i + 10);
 
             //Register listeners
-            borders[i]->AddMouseListener(MouseLeftDown, [&](const EZVisual::MouseEventParameter& param){
+            borders[i]->MouseLeftPressed += [&](const EZVisual::MouseEventParameter& param){
                 //Don't use i here
                 if(current_index == param.sender->GetId() - 10) return;
                 //We need another Invoke because these codes are in a listener
@@ -55,30 +56,30 @@ int main(){
                     target = visualization->GetVisualElement<Border>(current_index + 10);
                     current_color = target->GetBackground();
                 });
-            });
+            };
         }
 
         //Register listener for canvas
         canvas = visualization->GetVisualElement<Canvas>(16);
 
         //Set drawing mode when left button pushed.
-        canvas->AddMouseListener(MouseLeftDown, [&](const EZVisual::MouseEventParameter& param){
+        canvas->MouseLeftPressed += [&](const EZVisual::MouseEventParameter& param){
             drawing = true;
             first_point = true;
-        });
+        };
         //Set drawing mode when left button released.
-        canvas->AddMouseListener(MouseLeftUp, [&](const EZVisual::MouseEventParameter& param){
+        canvas->MouseLeftReleased += [&](const EZVisual::MouseEventParameter& param){
             drawing = false;
             first_point = false;
-        });
+        };
         //Set drawing mode when pointer leaved.
-        canvas->AddMouseListener(MouseLeave, [&](const EZVisual::MouseEventParameter& param){
+        canvas->MouseLeaved += [&](const EZVisual::MouseEventParameter& param){
             drawing = false;
             first_point = false;
-        });
+        };
 
         //Draw points
-        canvas->AddMouseListener(MouseMoving, [&](const EZVisual::MouseEventParameter& param){
+        canvas->MouseMoving += [&](const EZVisual::MouseEventParameter& param){
             if(!drawing) return;
             if(first_point){
                 //At the first point after pointer down, draw a circle.
@@ -96,11 +97,11 @@ int main(){
                 });
             }
             current_point = make_pair(param.relative_x, param.relative_y);
-        });
+        };
     });
 
     //Window will be waiting for key 27 by default
     t.join();
-
+    */
     return 0;
 }

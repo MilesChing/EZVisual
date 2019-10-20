@@ -1,10 +1,9 @@
 #include "EZVisual/Interfaces/VisualElement.h"
 #include "EZVisual/Core.h"
 #include <string>
-#include <map>
+#include <unordered_map>
 #include <thread>
 #include <mutex>
-
 using namespace std;
 using namespace cv;
 namespace EZVisual{
@@ -30,10 +29,16 @@ namespace EZVisual{
          * @param target_id Id of the target visual element.
          * @param T Desired type of the target visual element.
          */
-        template<typename T> T* GetVisualElement(int target_id) const{
-            auto p = visual_tree_root->SearchElementById(target_id);
-            if(!p) throw "Id not found.";
-            else return dynamic_cast<T*>(p);
+        template<typename T> T* GetVisualElement(int target_id){
+            auto it = controls_table.find(target_id);
+            VisualElement* res = NULL;
+            if(it == controls_table.end()){
+                res = visual_tree_root->SearchElementById(target_id);
+                if(res) controls_table[target_id] = res;
+            }
+            else res = it->second;
+            if(!res) throw "Id not found.";
+            else return dynamic_cast<T*>(res);
         }
 
         /**@brief Invoke a function on the UI.
@@ -50,12 +55,12 @@ namespace EZVisual{
 
         EZVisual::Color background;
 
-        map<int, VisualElement*> controls;
         string title = "EZVisual";
         int fps = 30;
         double scale_x = 1, scale_y = 1;
         VisualElement* visual_tree_root = NULL;
         cv::Mat view;
+        unordered_map<int, VisualElement*> controls_table;
 
         //Mouse Event Handler
         bool buttons[3];

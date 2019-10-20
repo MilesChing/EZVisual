@@ -17,6 +17,7 @@ EZVisual uses following software and library as its dependencies:
 - [CMake](https://cmake.org/)
 - [RapidJSON](http://rapidjson.org/index.html)
 - [OpenCV](https://opencv.org/)
+- [EZEvent](https://github.com/MilesChing/EZEvent)
 
 **Clone** or **download** our [source code](https://github.com/MilesChing/EZVisual/archive/master.zip).
 
