@@ -71,7 +71,7 @@ int main(){
             first_point = false;
         };
         //Set drawing mode when pointer leaved.
-        canvas->MouseLeaved += [&](const EZVisual::MouseEventParameter& param){
+        canvas->MouseExited += [&](const EZVisual::MouseEventParameter& param){
             drawing = false;
             first_point = false;
         };

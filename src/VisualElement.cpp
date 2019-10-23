@@ -28,7 +28,7 @@ namespace EZVisual{
 
     void VisualElement::BindEventTriggers(){
         MouseEntered.BindTrigger(&MouseEnteredTrigger);
-        MouseLeaved.BindTrigger(&MouseLeavedTrigger);
+        MouseExited.BindTrigger(&MouseExitedTrigger);
         MouseMoving.BindTrigger(&MouseMovingTrigger);
         MouseLeftPressed.BindTrigger(&MouseLeftPressedTrigger);
         MouseRightPressed.BindTrigger(&MouseRightPressedTrigger);
@@ -77,7 +77,7 @@ namespace EZVisual{
         if(params.current_event_type == MouseEventType::MouseMoving){
             if(in_this ^ is_mouse_in){
                 if(in_this) CallMouseEvent(MouseEventType::MouseEntered, rel_tmp);
-                else CallMouseEvent(MouseEventType::MouseLeaved, rel_tmp);
+                else CallMouseEvent(MouseEventType::MouseExited, rel_tmp);
                 is_mouse_in = in_this;
                 return true;
             }
@@ -93,9 +93,10 @@ namespace EZVisual{
 
     void VisualElement::CallMouseEvent(const MouseEventType& type, MouseEventParameter& param){
         param.sender = this;
+        param.current_event_type = type;
         switch(param.current_event_type){
             case MouseEventType::MouseEntered: MouseEnteredTrigger.Invoke(param); break;
-            case MouseEventType::MouseLeaved: MouseLeavedTrigger.Invoke(param); break;
+            case MouseEventType::MouseExited: MouseExitedTrigger.Invoke(param); break;
             case MouseEventType::MouseMoving: MouseMovingTrigger.Invoke(param); break;
             case MouseEventType::MouseLeftPressed: MouseLeftPressedTrigger.Invoke(param); break;
             case MouseEventType::MouseRightPressed: MouseRightPressedTrigger.Invoke(param); break;

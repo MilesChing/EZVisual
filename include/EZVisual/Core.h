@@ -24,7 +24,7 @@ namespace EZVisual{
 
     enum MouseEventType{
         MouseEntered,
-        MouseLeaved,
+        MouseExited,
         MouseMoving,
         MouseLeftPressed,
         MouseRightPressed,

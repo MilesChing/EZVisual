@@ -16,12 +16,13 @@ using namespace EZEvent;
 namespace EZVisual{
 
     class Visualization;
+
     typedef function<void(const MouseEventParameter& parameter)> MouseListener;
 
     class VisualElement{
     private:
         EventTrigger<MouseEventParameter> MouseEnteredTrigger;
-        EventTrigger<MouseEventParameter> MouseLeavedTrigger;
+        EventTrigger<MouseEventParameter> MouseExitedTrigger;
         EventTrigger<MouseEventParameter> MouseMovingTrigger;
         EventTrigger<MouseEventParameter> MouseLeftPressedTrigger;
         EventTrigger<MouseEventParameter> MouseRightPressedTrigger;
@@ -36,7 +37,7 @@ namespace EZVisual{
         virtual VisualElementType getType() const = 0;
 
         Event<MouseEventParameter> MouseEntered;
-        Event<MouseEventParameter> MouseLeaved;
+        Event<MouseEventParameter> MouseExited;
         Event<MouseEventParameter> MouseMoving;
         Event<MouseEventParameter> MouseLeftPressed;
         Event<MouseEventParameter> MouseRightPressed;
