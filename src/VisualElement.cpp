@@ -71,6 +71,7 @@ namespace EZVisual{
     bool VisualElement::CheckMouseEvent(const MouseEventParameter& params){
         bool in_this = params.relative_x >= x && params.relative_x < x + measured_width
             && params.relative_y >= y && params.relative_y < y + measured_height;
+        if(!in_this && !is_mouse_in) return false;
         MouseEventParameter rel_tmp(params);
         rel_tmp.relative_x = params.relative_x - x;
         rel_tmp.relative_y = params.relative_y - y;
@@ -79,9 +80,13 @@ namespace EZVisual{
                 if(in_this) CallMouseEvent(MouseEventType::MouseEntered, rel_tmp);
                 else CallMouseEvent(MouseEventType::MouseExited, rel_tmp);
                 is_mouse_in = in_this;
+                return false; //if not in this, may be in other controls
+            }
+            else if(in_this){
+                //if moving in this, no event would be triggered in other controls
+                CallMouseEvent(MouseEventType::MouseMoving, rel_tmp);
                 return true;
             }
-            else if(in_this) CallMouseEvent(MouseEventType::MouseMoving, rel_tmp);
             else return false;
         }
         else if(in_this){
