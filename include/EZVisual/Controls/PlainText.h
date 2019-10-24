@@ -19,7 +19,6 @@ namespace EZVisual{
                     , virtual public Marginable{
     public:
         PlainText(rapidjson::Value& json);
-        ~PlainText(){};
 
         void Draw(cv::Mat& target);
         void Measure(int desired_width, int desired_height);

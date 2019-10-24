@@ -10,7 +10,7 @@ namespace EZVisual{
 
     VisualElement* VisualElement::CreateInstance(rapidjson::Value& json){
         if(json["Type"].IsNull()){
-            cerr << "Error: \'Type\' not found.";
+            cerr << "Error: \'Type\' not found." << endl;
             return NULL;
         }
         VisualElementType type = StringConverter::ToVisualElementType(

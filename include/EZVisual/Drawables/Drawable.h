@@ -6,6 +6,7 @@ namespace EZVisual{
 
     class Drawable{
     public:
+        static Drawable* CreateInstance();
         virtual void Draw(cv::Mat& mat) = 0;
     };
 

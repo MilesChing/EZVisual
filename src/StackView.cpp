@@ -109,8 +109,4 @@ namespace EZVisual{
         return VisualElementType::StackView;
     }
 
-    StackView::~StackView(){
-        this->Childrenable::DeleteChildren();
-    }
-
 }

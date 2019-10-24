@@ -22,7 +22,6 @@ namespace EZVisual{
                  , virtual public Contentable{
     public:
         Border(rapidjson::Value& json);
-        ~Border();
 
         void Draw(cv::Mat& target);
         void Measure(int desired_width, int desired_height);

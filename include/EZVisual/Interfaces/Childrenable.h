@@ -8,7 +8,6 @@ namespace EZVisual{
 #define _EZVISUAL_CHILDRENABLE_
     class Childrenable : virtual public VisualElement{
     public:
-
         Childrenable(rapidjson::Value& json) : VisualElement(json){
             for(auto child : children) delete child;
             children.clear();
@@ -20,6 +19,12 @@ namespace EZVisual{
                         VisualElement::CreateInstance(array[i])
                     );
             }
+        }
+
+        ~Childrenable(){
+            for(auto& child : children)
+                delete child;
+            children.clear();
         }
 
         /**Get the count of children.
@@ -55,10 +60,6 @@ namespace EZVisual{
 
     protected:
         vector<VisualElement*> children;
-
-        void DeleteChildren(){
-            for(auto child : children) delete child;
-        }
     };
 
 #endif

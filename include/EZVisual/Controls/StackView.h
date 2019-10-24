@@ -21,7 +21,6 @@ namespace EZVisual{
                     , virtual public Orientationable{
     public:
         StackView(rapidjson::Value& json);
-        ~StackView();
 
         void Draw(cv::Mat& target);
         void Measure(int desired_width, int desired_height);

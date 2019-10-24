@@ -23,7 +23,6 @@ namespace EZVisual{
 
     public:
         Canvas(rapidjson::Value& json);
-        ~Canvas(){}
 
         void Draw(cv::Mat& target);
         void Measure(int desired_width, int desired_height);

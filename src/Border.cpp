@@ -80,8 +80,4 @@ namespace EZVisual{
         return VisualElementType::Border;
     }
 
-    Border::~Border(){
-        this->Contentable::DeleteContent();
-    }
-
 }

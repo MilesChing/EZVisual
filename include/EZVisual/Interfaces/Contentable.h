@@ -13,6 +13,13 @@ namespace EZVisual{
             if(!con.IsNull()) content = VisualElement::CreateInstance(con);
         }
 
+        ~Contentable(){
+            if(content){
+                delete content;
+                content = NULL;
+            }
+        }
+
         VisualElement* SearchElementById(int id){
             if(id == this->id) return this;
             if(content) return content->SearchElementById(id);
@@ -43,10 +50,6 @@ namespace EZVisual{
 
     protected:
         VisualElement* content = NULL;
-
-        void DeleteContent(){
-            if(content) delete content;
-        }
     };
 
 #endif
