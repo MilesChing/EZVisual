@@ -1,4 +1,5 @@
 #include "EZVisual/Interfaces/VisualElement.h"
+#include "EZVisual/Tools.h"
 #include <vector>
 
 namespace EZVisual{
@@ -14,12 +15,10 @@ namespace EZVisual{
             rapidjson::Value& ch = json["Children"];
             if(!ch.IsNull()){
                 auto array = ch.GetArray();
-                for(int i = 0; i < array.Size(); ++i){
-                    Value& child = array[i];
-                    VisualElementType type;
-                    Convert(child["Type"].GetString(), type);
-                    children.push_back(GetVisualElementFromType(type, child));
-                }
+                for(int i = 0; i < array.Size(); ++i)
+                    children.push_back(
+                        VisualElement::CreateInstance(array[i])
+                    );
             }
         }
 

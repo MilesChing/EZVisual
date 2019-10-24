@@ -1,4 +1,5 @@
 #include "EZVisual/Interfaces/VisualElement.h"
+#include "EZVisual/Drawables.h"
 
 namespace EZVisual{
 

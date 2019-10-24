@@ -1,5 +1,6 @@
 #include "EZVisual/Interfaces/VisualElement.h"
 #include "EZVisual/Core.h"
+#include "EZVisual/Drawables.h"
 #include <string>
 #include <unordered_map>
 #include <thread>

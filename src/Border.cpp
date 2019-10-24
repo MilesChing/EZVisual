@@ -24,15 +24,15 @@ namespace EZVisual{
             if(content_width > 0 && content_height > 0 && content){
                 int content_x = 0, content_y = 0;
                 switch (content->GetHorizontalAlignment()){
-                    case Left: content_x = padding[0]; break;
-                    case Right: content_x = border_width - padding[2];
-                    case HorizontalCenter: content_x = (border_width - content_width) / 2;
+                    case HorizontalAlignment::Left: content_x = padding[0]; break;
+                    case HorizontalAlignment::Right: content_x = border_width - padding[2];
+                    case HorizontalAlignment::Center: content_x = (border_width - content_width) / 2;
                 }
 
                 switch (content->GetVerticalAlignment()){
-                    case Top: content_y = padding[1]; break;
-                    case Bottom: content_y = border_height - padding[3];
-                    case VerticalCenter: content_y = (border_height - content_height) / 2;
+                    case VerticalAlignment::Top: content_y = padding[1]; break;
+                    case VerticalAlignment::Bottom: content_y = border_height - padding[3];
+                    case VerticalAlignment::Center: content_y = (border_height - content_height) / 2;
                 }
 
                 Mat content_roi(border_roi, Rect(content_x, content_y, content_width, content_height));
@@ -77,7 +77,7 @@ namespace EZVisual{
     }
 
     VisualElementType Border::getType() const{
-        return VisualElementType::TYPE_BORDER;
+        return VisualElementType::Border;
     }
 
     Border::~Border(){

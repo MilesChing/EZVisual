@@ -59,7 +59,7 @@ namespace EZVisual{
     }
 
     VisualElementType Canvas::getType() const{
-        return TYPE_CANVAS;
+        return VisualElementType::Canvas;
     }
 
     void Canvas::PaintColor(const Color& color, int layer_index){

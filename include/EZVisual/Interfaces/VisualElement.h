@@ -32,6 +32,7 @@ namespace EZVisual{
         void BindEventTriggers();
 
     public:
+        static VisualElement* CreateInstance(rapidjson::Value& json);
         virtual void Draw(cv::Mat& target) = 0;
         virtual void Measure(int desired_width, int desired_height) = 0;
         virtual VisualElementType getType() const = 0;
@@ -65,8 +66,8 @@ namespace EZVisual{
         int measured_width = -1, measured_height = -1;
         int x = 0, y = 0;
 
-        HorizontalAlignment horizontal_alignment = Left;
-        VerticalAlignment vertical_alignment = Top;
+        HorizontalAlignment horizontal_alignment = HorizontalAlignment::Left;
+        VerticalAlignment vertical_alignment = VerticalAlignment::Top;
 
         bool is_mouse_in = false;
 

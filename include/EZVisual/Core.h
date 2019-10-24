@@ -4,32 +4,43 @@
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/writer.h"
 #include "opencv2/opencv.hpp"
-#include <chrono>
-#include <ctime>
 using namespace std;
 using namespace rapidjson;
 
 #ifndef _EZVISUAL_CORE_
 #define _EZVISUAL_CORE_
 
-#define nameof(x) (#x)
+#define _def_enum(e) \
+    private: \
+        int inner_int = 0;  \
+    public: \
+        e(){}   \
+        e operator =(int i){ inner_int = i; }    \
+        bool operator ==(const e& o) const{ return o.inner_int == inner_int; } \
+        bool operator ==(int o) const{ return o == inner_int; } \
+        operator int() const{ return inner_int; }   \
+        e(int i){ inner_int = i; }  \
+        static const int Null = 0
+#define _def_item(e, val) \
+    static const int e = val
+
 
 namespace EZVisual{
+
+    class VisualElement;
 
     const int WRAP_CONTENT = 0;
     const int FILL_PARENT = -1;
 
-    class VisualElement;
-
-
-    enum MouseEventType{
-        MouseEntered,
-        MouseExited,
-        MouseMoving,
-        MouseLeftPressed,
-        MouseRightPressed,
-        MouseLeftReleased,
-        MouseRightReleased
+    class MouseEventType{
+        _def_enum(MouseEventType);
+        _def_item(MouseEntered, 1);
+        _def_item(MouseExited, 2);
+        _def_item(MouseMoving, 3);
+        _def_item(MouseLeftPressed, 4);
+        _def_item(MouseRightPressed, 5);
+        _def_item(MouseLeftReleased, 6);
+        _def_item(MouseRightReleased, 7);
     };
 
     struct MouseEventParameter{
@@ -40,65 +51,33 @@ namespace EZVisual{
         VisualElement* sender;
     };
 
-    enum HorizontalAlignment{
-        Left,
-        Right,
-        HorizontalCenter
+    class HorizontalAlignment{
+        _def_enum(HorizontalAlignment);
+        _def_item(Left, 1);
+        _def_item(Right, 2);
+        _def_item(Center, 3);
     };
 
-    enum VerticalAlignment{
-        Top,
-        Bottom,
-        VerticalCenter
+    class VerticalAlignment{
+        _def_enum(VerticalAlignment);
+        _def_item(Top, 1);
+        _def_item(Bottom, 2);
+        _def_item(Center, 3);
     };
 
-    enum VisualElementType{
-        TYPE_BORDER,
-        TYPE_STACK_VIEW,
-        TYPE_PLAIN_TEXT,
-        TYPE_CANVAS
+    class VisualElementType{
+        _def_enum(VisualElementType);
+        _def_item(Border, 1);
+        _def_item(StackView, 2);
+        _def_item(PlainText, 3);
+        _def_item(Canvas, 4);
     };
 
-    enum Orientation{
-        Horizontal,
-        Vertical
+    class Orientation{
+        _def_enum(Orientation);
+        _def_item(Horizontal, 1);
+        _def_item(Vertical, 2);
     };
-
-    class Color{
-    public:
-        Color(){}
-
-        Color(u_char A, u_char R, u_char G, u_char B);
-
-        Color(u_char R, u_char G, u_char B);
-
-        Color(unsigned int argb);
-
-        Color(const std::string& argb);
-
-        void Cover(cv::Mat& mat) const;
-
-        void Cover(cv::Vec3b& v3) const;
-
-        void Cover(Color& color) const;
-
-        bool operator == (const Color& c) const;
-
-        bool operator != (const Color& c) const;
-
-        operator unsigned int() const;
-
-        u_char a = 0xff, r = 0xff, g = 0xff, b = 0xff;
-    };
-
-    void Convert(const string& data, HorizontalAlignment& attr);
-    void Convert(const string& data, VerticalAlignment& attr);
-    void Convert(const string& data, VisualElementType& attr);
-    void Convert(const string& data, Orientation& attr);
-
-    VisualElement* GetVisualElementFromType(const VisualElementType& type, rapidjson::Value& json);
-
-    std::time_t GetTimeMs();
 
 }
 

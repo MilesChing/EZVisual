@@ -60,7 +60,7 @@ namespace EZVisual{
     }
 
     VisualElementType PlainText::getType() const{
-        return TYPE_PLAIN_TEXT;
+        return VisualElementType::PlainText;
     }
 
 }

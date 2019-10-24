@@ -1,4 +1,5 @@
 #include "EZVisual/Interfaces/VisualElement.h"
+#include "EZVisual/Tools.h"
 
 namespace EZVisual{
 
@@ -8,9 +9,9 @@ namespace EZVisual{
     public:
         Orientationable(rapidjson::Value& json) : VisualElement(json){
             rapidjson::Value& o = json["Orientation"];
-            if(!o.IsNull()){
-                Convert(o.GetString(), orientation);
-            }
+            if(!o.IsNull()) orientation = StringConverter::ToOrientation(
+                o.GetString()
+            );
         }
 
         /**@brief Set the orientation for a container.
@@ -34,7 +35,7 @@ namespace EZVisual{
             return orientation;
         }
     protected:
-        Orientation orientation = Vertical;
+        Orientation orientation = Orientation::Vertical;
     };
 
 #endif

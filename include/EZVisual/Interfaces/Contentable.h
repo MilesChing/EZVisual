@@ -1,4 +1,5 @@
 #include "EZVisual/Interfaces/VisualElement.h"
+#include "EZVisual/Tools.h"
 
 namespace EZVisual{
 
@@ -9,11 +10,7 @@ namespace EZVisual{
         Contentable(rapidjson::Value& json) : VisualElement(json){
             if(content) delete content;
             rapidjson::Value& con = json["Content"];
-            if(!con.IsNull()){
-                VisualElementType type;
-                Convert(con["Type"].GetString(), type);
-                content = GetVisualElementFromType(type, con);
-            }
+            if(!con.IsNull()) content = VisualElement::CreateInstance(con);
         }
 
         VisualElement* SearchElementById(int id){

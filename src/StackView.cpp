@@ -26,10 +26,10 @@ namespace EZVisual{
             Mat content_roi(border_roi, Rect(padding[0], padding[1], content_width, content_height));
             int child_x = 0, child_y = 0;
 
-            if(orientation == Vertical){
+            if(orientation == Orientation::Vertical){
                 for(auto child : children){
-                    if(child->GetHorizontalAlignment() == Left) child_x = 0;
-                    else if(child->GetHorizontalAlignment() == Right)
+                    if(child->GetHorizontalAlignment() == HorizontalAlignment::Left) child_x = 0;
+                    else if(child->GetHorizontalAlignment() == HorizontalAlignment::Right)
                         child_x = content_width - child->GetMeasuredWidth();
                     else child_x = (content_width - child->GetMeasuredWidth()) / 2;
                     Mat child_roi(content_roi, Rect(child_x, child_y,
@@ -40,8 +40,8 @@ namespace EZVisual{
             }
             else{
                 for(auto child : children){
-                    if(child->GetVerticalAlignment() == Top) child_y = 0;
-                    else if(child->GetVerticalAlignment() == Bottom)
+                    if(child->GetVerticalAlignment() == VerticalAlignment::Top) child_y = 0;
+                    else if(child->GetVerticalAlignment() == VerticalAlignment::Bottom)
                         child_y = content_height - child->GetMeasuredHeight();
                     else child_y = (content_height - child->GetMeasuredHeight()) / 2;
                     Mat child_roi(content_roi, Rect(child_x, child_y,
@@ -66,7 +66,7 @@ namespace EZVisual{
 
         int children_width = 0, children_height = 0;
         for(auto child : children){
-            if(orientation == Horizontal){
+            if(orientation == Orientation::Horizontal){
                 if(children_width < content_width)
                     child->Measure(content_width - children_width, content_height);
                 else child->Measure(0, 0);
@@ -106,7 +106,7 @@ namespace EZVisual{
     }
 
     VisualElementType StackView::getType() const{
-        return VisualElementType::TYPE_STACK_VIEW;
+        return VisualElementType::StackView;
     }
 
     StackView::~StackView(){

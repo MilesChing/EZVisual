@@ -1,10 +1,29 @@
 #include "EZVisual/Interfaces.h"
+#include "EZVisual/Controls.h"
+#include "EZVisual/Tools.h"
 #include <string>
 
 using namespace std;
 using namespace cv;
 
 namespace EZVisual{
+
+    VisualElement* VisualElement::CreateInstance(rapidjson::Value& json){
+        if(json["Type"].IsNull()){
+            cerr << "Error: \'Type\' not found.";
+            return NULL;
+        }
+        VisualElementType type = StringConverter::ToVisualElementType(
+            json["Type"].GetString()
+        );
+        switch(type){
+            case VisualElementType::Border: return new Border(json);
+            case VisualElementType::StackView: return new StackView(json);
+            case VisualElementType::PlainText: return new PlainText(json);
+            case VisualElementType::Canvas: return new Canvas(json);
+            default: return NULL;
+        }
+    }
 
     int VisualElement::GetMeasuredWidth() const{
         return measured_width;
@@ -58,9 +77,13 @@ namespace EZVisual{
         }
         //get Alignment
         if(!json["HorizontalAlignment"].IsNull())
-            Convert(json["HorizontalAlignment"].GetString(), horizontal_alignment);
+            horizontal_alignment = StringConverter::ToHorizontalAlignment(
+                json["HorizontalAlignment"].GetString()
+            );
         if(!json["VerticalAlignment"].IsNull())
-            Convert(json["VerticalAlignment"].GetString(), vertical_alignment);
+            vertical_alignment = StringConverter::ToVerticalAlignment(
+                json["VerticalAlignment"].GetString()
+            );
     }
 
     VisualElement* VisualElement::SearchElementById(int id){
