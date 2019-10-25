@@ -1,5 +1,5 @@
 #include "EZVisual/Visualization.h"
-#include "EZVisual/Tools.h"
+#include "EZVisual/Tools/StringConverter.hpp"
 #include <unistd.h>
 using namespace cv;
 namespace EZVisual{

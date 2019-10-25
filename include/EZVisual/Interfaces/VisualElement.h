@@ -1,3 +1,4 @@
+#pragma once
 #include "opencv2/opencv.hpp"
 #include "EZVisual/Core.h"
 #include "rapidjson/rapidjson.h"
@@ -11,8 +12,6 @@ using namespace rapidjson;
 using namespace cv;
 using namespace EZEvent;
 
-#ifndef _EZVISUAL_VISUAL_ELEMENT_
-#define _EZVISUAL_VISUAL_ELEMENT_
 namespace EZVisual{
 
     class Visualization;
@@ -77,4 +76,3 @@ namespace EZVisual{
     };
 
 }
-#endif

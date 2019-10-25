@@ -1,8 +1,7 @@
+#pragma once
 #include "opencv2/opencv.hpp"
 
 namespace EZVisual{
-#ifndef _EZVISUAL_COLOR_
-#define _EZVISUAL_COLOR_
 
     class Color{
     public:
@@ -112,5 +111,4 @@ namespace EZVisual{
         u_char a = 0xff, r = 0xff, g = 0xff, b = 0xff;
     };
 
-#endif
 }

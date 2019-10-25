@@ -1,10 +1,9 @@
+#pragma once
 #include "EZVisual/Interfaces/VisualElement.h"
-#include "EZVisual/Tools.h"
+#include "EZVisual/Tools/StringConverter.hpp"
 
 namespace EZVisual{
 
-#ifndef _EZVISUAL_ORIENTATIONABLE_
-#define _EZVISUAL_ORIENTATIONABLE_
     class Orientationable : virtual public VisualElement{
     public:
         Orientationable(rapidjson::Value& json) : VisualElement(json){
@@ -37,7 +36,5 @@ namespace EZVisual{
     protected:
         Orientation orientation = Orientation::Vertical;
     };
-
-#endif
 
 }

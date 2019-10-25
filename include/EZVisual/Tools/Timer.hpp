@@ -1,10 +1,8 @@
+#pragma once
 #include <chrono>
 #include <ctime>
 using namespace std::chrono;
 namespace EZVisual{
-#ifndef _EZVISUAL_TIMER_
-#define _EZVISUAL_TIMER_
-
     class Timer{
     public:
         static time_t GetMiroseconds(){
@@ -13,6 +11,4 @@ namespace EZVisual{
 	    	return duration_cast<microseconds>(tp.time_since_epoch()).count();
 	    }
     };
-
-#endif
 }

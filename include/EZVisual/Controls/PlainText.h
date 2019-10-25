@@ -1,3 +1,4 @@
+#pragma once
 #include "opencv2/opencv.hpp"
 #include "EZVisual/Core.h"
 #include "EZVisual/Interfaces.h"
@@ -8,9 +9,6 @@ using namespace cv;
 
 
 namespace EZVisual{
-#ifndef _EZVISUAL_PLAIN_TEXT_
-#define _EZVISUAL_PLAIN_TEXT_
-
     /**@brief PlainText is just a single line of text with optional margin.
      *
      * PlainText is just a single line of text with optional margin. The text will not be wrapped but be clipped directly when the width of it is limited.
@@ -29,5 +27,4 @@ namespace EZVisual{
         int base_line_height;
 
     };
-#endif
 }

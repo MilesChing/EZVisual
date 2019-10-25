@@ -1,11 +1,10 @@
+#pragma once
 #include "EZVisual/Interfaces/VisualElement.h"
-#include "EZVisual/Tools.h"
+#include "EZVisual/Tools/StringConverter.hpp"
 #include <vector>
 
 namespace EZVisual{
 
-#ifndef _EZVISUAL_CHILDRENABLE_
-#define _EZVISUAL_CHILDRENABLE_
     class Childrenable : virtual public VisualElement{
     public:
         Childrenable(rapidjson::Value& json) : VisualElement(json){
@@ -61,7 +60,5 @@ namespace EZVisual{
     protected:
         vector<VisualElement*> children;
     };
-
-#endif
 
 }

@@ -1,9 +1,8 @@
+#pragma once
 #include "EZVisual/Interfaces/VisualElement.h"
 
 namespace EZVisual{
 
-#ifndef _EZVISUAL_MARGINABLE_
-#define _EZVISUAL_MARGINABLE_
     class Marginable : virtual public VisualElement{
     public:
         Marginable(rapidjson::Value& json) : VisualElement(json){
@@ -65,8 +64,6 @@ namespace EZVisual{
         int margin[4] = {0};
         int content_width, content_height;
     };
-
-#endif
 
 }
 

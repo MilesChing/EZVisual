@@ -1,8 +1,7 @@
+#pragma once
 #include "EZVisual/Core.h"
 
 namespace EZVisual{
-#ifndef _EZVISUAL_STRING_CONVERTER_
-#define _EZVISUAL_STRING_CONVERTER_
 
     class StringConverter{
     public:
@@ -34,6 +33,4 @@ namespace EZVisual{
             else return Orientation::Null;
         }
     };
-
-#endif
 }

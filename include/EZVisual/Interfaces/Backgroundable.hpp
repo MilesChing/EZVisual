@@ -1,10 +1,9 @@
+#pragma once
 #include "EZVisual/Interfaces/VisualElement.h"
-#include "EZVisual/Drawables.h"
+#include "EZVisual/Brushes.h"
 
 namespace EZVisual{
 
-#ifndef _EZVISUAL_BACKGROUNDABLE_
-#define _EZVISUAL_BACKGROUNDABLE_
     class Backgroundable : virtual public VisualElement{
     public:
         Backgroundable(rapidjson::Value& json) : VisualElement(json){
@@ -37,8 +36,6 @@ namespace EZVisual{
     protected:
         Color background = Color(0);
     };
-
-#endif
 
 }
 

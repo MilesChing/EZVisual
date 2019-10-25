@@ -1,12 +1,10 @@
+#pragma once
 #include "EZVisual/Interfaces.h"
 #include "EZVisual/Core.h"
 
 using namespace cv;
 
-#ifndef _EZVISUAL_STACK_VIEW_
-#define _EZVISUAL_STACK_VIEW_
 namespace EZVisual{
-
     /**@StackView is a container which always place its children in order like a stack.
      *
      * The behavior of each StackView element due to its orientation:
@@ -33,4 +31,3 @@ namespace EZVisual{
     };
 
 }
-#endif

@@ -1,6 +1,6 @@
 #include "EZVisual/Interfaces.h"
 #include "EZVisual/Controls.h"
-#include "EZVisual/Tools.h"
+#include "EZVisual/Tools/StringConverter.hpp"
 #include <string>
 
 using namespace std;

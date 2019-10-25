@@ -3,12 +3,10 @@
 #include <tuple>
 #include <queue>
 #include <mutex>
+#pragma once
 #include <set>
 
 using namespace std;
-
-#ifndef _EZVISUAL_CANVAS_
-#define _EZVISUAL_CANVAS_
 
 namespace EZVisual{
 
@@ -169,5 +167,3 @@ namespace EZVisual{
     };
 
 }
-
-#endif

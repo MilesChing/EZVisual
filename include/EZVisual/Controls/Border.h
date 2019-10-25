@@ -1,3 +1,4 @@
+#pragma once
 #include "EZVisual/Interfaces.h"
 #include "opencv2/opencv.hpp"
 #include "rapidjson/rapidjson.h"
@@ -8,8 +9,6 @@
 
 using namespace cv;
 
-#ifndef _EZVISUAL_BORDER_
-#define _EZVISUAL_BORDER_
 namespace EZVisual{
 
     /**@brief Border is a visual frame with an optional content.
@@ -32,4 +31,3 @@ namespace EZVisual{
     };
 
 }
-#endif

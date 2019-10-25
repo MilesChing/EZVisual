@@ -1,10 +1,9 @@
+#pragma once
 #include "EZVisual/Interfaces/VisualElement.h"
-#include "EZVisual/Tools.h"
+#include "EZVisual/Tools/StringConverter.hpp"
 
 namespace EZVisual{
 
-#ifndef _EZVISUAL_CONTENTABLE_
-#define _EZVISUAL_CONTENTABLE_
     class Contentable : virtual public VisualElement{
     public:
         Contentable(rapidjson::Value& json) : VisualElement(json){
@@ -51,7 +50,5 @@ namespace EZVisual{
     protected:
         VisualElement* content = NULL;
     };
-
-#endif
 
 }

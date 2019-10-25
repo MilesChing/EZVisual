@@ -1,9 +1,8 @@
+#pragma once
 #include "EZVisual/Interfaces/VisualElement.h"
 
 namespace EZVisual{
 
-#ifndef _EZVISUAL_PADDINGABLE_
-#define _EZVISUAL_PADDINGABLE_
     class Paddingable : virtual public VisualElement{
     public:
 
@@ -66,8 +65,6 @@ namespace EZVisual{
         int padding[4] = {0};
         int border_width, border_height;
     };
-
-#endif
 
 }
 

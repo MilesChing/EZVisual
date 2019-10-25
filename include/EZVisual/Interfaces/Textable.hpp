@@ -1,9 +1,8 @@
+#pragma once
 #include "EZVisual/Interfaces/VisualElement.h"
 
 namespace EZVisual{
 
-#ifndef _EZVISUAL_TEXTABLE_
-#define _EZVISUAL_TEXTABLE_
     class Textable : virtual public VisualElement{
     public:
         Textable(rapidjson::Value& json) : VisualElement(json){
@@ -125,8 +124,6 @@ namespace EZVisual{
 
         int text_height, text_width, text_base_line;
     };
-
-#endif
 
 }
 

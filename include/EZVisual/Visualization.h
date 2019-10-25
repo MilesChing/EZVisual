@@ -1,6 +1,7 @@
+#pragma once
 #include "EZVisual/Interfaces/VisualElement.h"
 #include "EZVisual/Core.h"
-#include "EZVisual/Drawables.h"
+#include "EZVisual/Brushes.h"
 #include <string>
 #include <unordered_map>
 #include <thread>
@@ -8,9 +9,6 @@
 using namespace std;
 using namespace cv;
 namespace EZVisual{
-
-#ifndef _EZVISUAL_VISUALIZATION_
-#define _EZVISUAL_VISUALIZATION_
 
     class Visualization{
     public:
@@ -70,7 +68,5 @@ namespace EZVisual{
 
         static void OnMouse(int event,int x,int y,int flags,void* visualization);
     };
-
-#endif
 
 }
