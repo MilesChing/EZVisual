@@ -5,7 +5,14 @@
     "Layout": {
         "Type": "StackView",
         "Orientation": "Horizontal",
-        "Background": "#181818",
+        "Background": {
+            "BrushType" : "LinearGradientBrush",
+            "ColorFrames" : [
+                "#005FFF",
+                "#FF5FFF"
+            ],
+            "Angle" : 60
+        },
         "Children": [
             {
                 "Type": "StackView",
@@ -14,7 +21,7 @@
                 "Children":[
                     {   "Type": "PlainText",
                         "Text": "EZVisual",
-                        "FontColor": "#6AE856",
+                        "FontColor": "#ffffff",
                         "FontSize": 1.6,
                         "FontWeight": 2    },
 
@@ -34,7 +41,7 @@
                             "Type": "Border",
                             "Id": 10,
                             "Width": "FillParent", "Height": "FillParent",
-                            "Background": "#aaaaaa"
+                            "Background": "#ff0000"
                         }},
 
                     {   "Type": "Border", "Id": 1,
@@ -85,14 +92,13 @@
 
             {
                 "Type": "Border",
-                "Background": "#777777",
                 "Padding": 1,
                 "Margin": [0, 20, 20, 20],
                 "Content":{
                     "Type": "Canvas", "Id": 16,
                     "LayerHeight": 400,
                     "LayerWidth": 400,
-                    "Background": "#ff000000",
+                    "Background": "#77000000",
                     "LayerCount": 5
                 }
             }

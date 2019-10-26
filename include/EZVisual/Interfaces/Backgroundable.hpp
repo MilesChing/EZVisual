@@ -7,9 +7,13 @@ namespace EZVisual{
     class Backgroundable : virtual public VisualElement{
     public:
         Backgroundable(rapidjson::Value& json) : VisualElement(json){
-            if(json["Background"].IsString()){
-                background = Color(json["Background"].GetString());
-            }
+            rapidjson::Value& back_json = json["Background"];
+            if(back_json.IsNull()) background = SolidColorBrush::CreateInstance();
+            else background = Brush::CreateInstance(back_json);
+        }
+
+        ~Backgroundable(){
+            delete background;
         }
 
         /**@brief Set background color for a visual element.
@@ -18,9 +22,9 @@ namespace EZVisual{
          *
          * @param color Color to be set for.
          */
-        void SetBackground(const Color& color){
-            if(background != color)
-                background = color;
+        void SetBackground(Brush* brush){
+            delete background;
+            background = brush;
         }
 
         /**@brief Get the background color of a visual element.
@@ -29,12 +33,12 @@ namespace EZVisual{
          *
          * @ret The background color of this element.
          */
-        Color GetBackground() const{
+        Brush* GetBackground() const{
             return background;
         }
 
     protected:
-        Color background = Color(0);
+        Brush* background = NULL;
     };
 
 }

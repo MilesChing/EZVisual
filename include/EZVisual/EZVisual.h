@@ -2,3 +2,4 @@
 #include "EZVisual/Controls.h"
 #include "EZVisual/Interfaces.h"
 #include "EZVisual/Visualization.h"
+#include "EZVisual/Brushes.h"

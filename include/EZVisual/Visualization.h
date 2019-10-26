@@ -52,7 +52,7 @@ namespace EZVisual{
     private:
         std::mutex view_mtx, measure_and_draw_mtx;
 
-        EZVisual::Color background;
+        EZVisual::Brush* background;
 
         string title = "EZVisual";
         int fps = 30;

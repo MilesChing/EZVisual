@@ -1,5 +1,6 @@
 #pragma once
 #include "EZVisual/Core.h"
+#include "EZVisual/Brushes/Brush.h"
 
 namespace EZVisual{
 
@@ -31,6 +32,12 @@ namespace EZVisual{
             if(str == "Horizontal") return Orientation::Horizontal;
             else if(str == "Vertical") return Orientation::Vertical;
             else return Orientation::Null;
+        }
+
+        static BrushType ToBrushType(const string& str){
+            if(str == "SolidColorBrush") return BrushType::SolidColorBrush;
+            else if(str == "LinearGradientBrush") return BrushType::LinearGradientBrush;
+            else return BrushType::Null;
         }
     };
 }

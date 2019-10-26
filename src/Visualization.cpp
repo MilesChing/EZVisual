@@ -27,7 +27,9 @@ namespace EZVisual{
             scale_y = doc["ScaleY"].GetDouble();
 
         if(doc["Background"].IsString()){
-            background = EZVisual::Color(doc["Background"].GetString());
+            if(doc["Background"].IsNull())
+                background = SolidColorBrush::CreateInstance(0xffffffff);
+            else background = Brush::CreateInstance(doc["Background"]);
         }
 
         Value& layout = doc["Layout"];
@@ -37,6 +39,7 @@ namespace EZVisual{
 
     Visualization::~Visualization(){
         if(visual_tree_root) delete visual_tree_root;
+        if(background) delete background;
     }
 
     void Visualization::OnMouse(int event,int x,int y,int flags,void *ustc){
@@ -79,7 +82,7 @@ namespace EZVisual{
                         view = Mat::zeros(visual_tree_root->GetMeasuredHeight(),
                                 visual_tree_root->GetMeasuredWidth(), CV_8UC3);
                     }
-                    background.Cover(view);
+                    background->Draw(view);
                     visual_tree_root->Draw(view);
                     cv::resize(view, view, cv::Size(0, 0), scale_x, scale_y, CV_INTER_LANCZOS4);
                 }

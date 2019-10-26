@@ -18,7 +18,7 @@ namespace EZVisual{
 
         if(border_width > 0 && border_height > 0){
             Mat border_roi(target, Rect(margin[0], margin[1], border_width, border_height));
-            background.Cover(border_roi);
+            background->Draw(border_roi);
             UpdateGlobalXY(border_roi);
 
             if(content_height == 0 || content_width == 0) return;

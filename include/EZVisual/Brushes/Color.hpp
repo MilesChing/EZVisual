@@ -1,5 +1,8 @@
 #pragma once
 #include "opencv2/opencv.hpp"
+#include <sstream>
+
+using namespace std;
 
 namespace EZVisual{
 

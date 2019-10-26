@@ -16,7 +16,7 @@ using namespace cv;
 EZVisual::Canvas* canvas;
 EZVisual::Border* borders[4];
 int current_index = 0;
-EZVisual::Color current_color;
+EZVisual::Color current_color(0xffff0000);
 bool drawing = false;
 bool first_point = true;
 pair<int, int> current_point;
@@ -47,12 +47,12 @@ int main(){
                 //Use vis not visualization here
                 vis.Invoke([&](Visualization* visualization){
                     Border* target = visualization->GetVisualElement<Border>(old_idx);
-                    target->SetBackground(0);
+                    target->SetBackground(SolidColorBrush::CreateInstance(0));
                     //Update the color of the selected border
                     target = visualization->GetVisualElement<Border>(current_index);
-                    target->SetBackground(0xffffffff);
+                    target->SetBackground(SolidColorBrush::CreateInstance(0xffffffff));
                     target = visualization->GetVisualElement<Border>(current_index + 10);
-                    current_color = target->GetBackground();
+                    current_color = dynamic_cast<SolidColorBrush*>(target->GetBackground())->GetColor();
                 });
             };
         }

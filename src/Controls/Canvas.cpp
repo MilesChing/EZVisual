@@ -29,7 +29,7 @@ namespace EZVisual{
         if(content_width > 0 && content_height > 0){
             cv::Mat content_roi(target, cv::Rect(margin[0], margin[1], content_width, content_height));
             UpdateGlobalXY(content_roi);
-            background.Cover(content_roi);
+            background->Draw(content_roi);
             for(int i = 0; i < layer_count; ++i)
                 for(int x = 0; x < min(layer_width, content_width); ++x)
                     for(int y = 0; y < min(layer_height, content_height); ++y)
