@@ -8,8 +8,12 @@
         "Background": {
             "BrushType" : "LinearGradientBrush",
             "ColorFrames" : [
-                "#005FFF",
-                "#FF5FFF"
+                "#000000",
+                "#456789",
+                "#789ABC"
+            ],
+            "OffsetFrames" : [
+                0, 0.6, 1
             ],
             "Angle" : 60
         },

@@ -19,15 +19,13 @@ namespace EZVisual{
                     , virtual public Orientationable{
     public:
         StackView(rapidjson::Value& json);
-
-        void Draw(cv::Mat& target);
-        void Measure(int desired_width, int desired_height);
-
         bool CheckMouseEvent(const MouseEventParameter& params);
-
         VisualElementType getType() const;
 
     protected:
+        void OnDraw(cv::Mat& target);
+        void OnMeasure(int desired_width, int desired_height);
+
     };
 
 }

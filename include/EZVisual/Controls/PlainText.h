@@ -17,14 +17,12 @@ namespace EZVisual{
                     , virtual public Marginable{
     public:
         PlainText(rapidjson::Value& json);
-
-        void Draw(cv::Mat& target);
-        void Measure(int desired_width, int desired_height);
-
         VisualElementType getType() const;
 
     protected:
         int base_line_height;
 
+        void OnDraw(cv::Mat& target);
+        void OnMeasure(int desired_width, int desired_height);
     };
 }

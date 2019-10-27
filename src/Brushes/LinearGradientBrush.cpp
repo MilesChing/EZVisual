@@ -39,7 +39,7 @@ namespace EZVisual{
             for(int i = 0; i < color_array.Size(); ++i){
                 if(!color_array[i].IsString())
                     throw "Color in \'ColorFrames\' must be string.";
-                if(!offset_array[i].IsNumber())
+                if(!offset_array[i].IsDouble() && !offset_array[i].IsNumber())
                     throw "Offset in \'OffsetFrames\' must be float.";
                 source.emplace_back(offset_array[i].GetDouble(),
                     Color(color_array[i].GetString()));

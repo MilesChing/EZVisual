@@ -20,8 +20,10 @@ namespace EZVisual{
          * @param orientation New orientation to be set for.
          */
         void SetOrientation(const Orientation& orientation){
+            measure_and_draw_mtx.lock_shared();
             if(this->orientation != orientation)
                 this->orientation = orientation;
+            measure_and_draw_mtx.unlock_shared();
         }
 
         /**@brief Get the orientation of a container.

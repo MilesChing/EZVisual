@@ -25,6 +25,16 @@ namespace EZVisual{
         }
     }
 
+    void VisualElement::Measure(int desired_width, int desired_height){
+        measure_and_draw_mtx.lock();
+        OnMeasure(desired_width, desired_height);
+    }
+
+    void VisualElement::Draw(cv::Mat& target){
+        OnDraw(target);
+        measure_and_draw_mtx.unlock();
+    }
+
     int VisualElement::GetMeasuredWidth() const{
         return measured_width;
     }

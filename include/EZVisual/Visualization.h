@@ -28,7 +28,7 @@ namespace EZVisual{
          * @param target_id Id of the target visual element.
          * @param T Desired type of the target visual element.
          */
-        template<typename T> T* GetVisualElement(int target_id){
+        template<typename T> T* Get(int target_id){
             auto it = controls_table.find(target_id);
             VisualElement* res = NULL;
             if(it == controls_table.end()){
@@ -40,15 +40,6 @@ namespace EZVisual{
             else return dynamic_cast<T*>(res);
         }
 
-        /**@brief Invoke a function on the UI.
-         *
-         * Do an action on the UI. UI tasks including drawing and measuring runs on a seperate thread and shouldn't be modified freely. The only way to update attributes and preferences of visual elements is to invoke a function by calling this.
-         *
-         * @param operation Function to be invoked.
-         * @warning Don't call Invoke recursively in "operation". It will cause a dead lock.
-         */
-        void Invoke(const function<void(Visualization*)>& operation);
-
     private:
         std::mutex view_mtx, measure_and_draw_mtx;
 
@@ -56,6 +47,7 @@ namespace EZVisual{
 
         string title = "EZVisual";
         int fps = 30;
+        unsigned int user_input = 0;
         double scale_x = 1, scale_y = 1;
         VisualElement* visual_tree_root = NULL;
         cv::Mat view;

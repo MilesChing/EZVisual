@@ -49,6 +49,11 @@ namespace EZVisual{
         }
 
         void Cover(cv::Mat& mat) const{
+            if(a == 0) return;
+            if(a == 255){
+                mat = cv::Scalar(b, g, r);
+                return;
+            }
             for(int i = 0; i < mat.rows; ++i){
                 for(int j = 0; j < mat.cols; ++j){
                     cv::Vec3b& v3 = mat.at<cv::Vec3b>(i, j);

@@ -10,7 +10,7 @@ namespace EZVisual{
         Orientationable(json),
         VisualElement(json){}
 
-    void StackView::Draw(cv::Mat& target){
+    void StackView::OnDraw(cv::Mat& target){
         if(measured_height == 0 || measured_width == 0) return;
 
         if(target.rows < measured_height || target.cols < measured_width)
@@ -53,7 +53,7 @@ namespace EZVisual{
         }
     }
 
-    void StackView::Measure(int desired_width, int desired_height){
+    void StackView::OnMeasure(int desired_width, int desired_height){
         this->Marginable::GetFreeSpace(desired_width, desired_height);
         if(width != WRAP_CONTENT && width != FILL_PARENT) content_width = min(content_width, width);
         if(height != WRAP_CONTENT && height != FILL_PARENT) content_height = min(content_height, height);

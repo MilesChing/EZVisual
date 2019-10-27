@@ -44,6 +44,7 @@ namespace EZVisual{
 
     void Visualization::OnMouse(int event,int x,int y,int flags,void *ustc){
         Visualization* tis = (Visualization*)ustc;
+        tis->user_input = 200;
         tis->mouse_event_param.relative_x = x;
         tis->mouse_event_param.relative_y = y;
         switch (event){
@@ -70,24 +71,29 @@ namespace EZVisual{
     void Visualization::LaunchWindow(){
         try{
             cv::namedWindow(title, CV_WINDOW_AUTOSIZE);
-            int interval_ms = 1000 / fps;
+            int interval_ms_big = 1000 / fps;
+            int interval_ms_small = 5;
             cv::setMouseCallback(title, OnMouse, this);
             while(true){
-                {
-                    std::unique_lock<std::mutex> lck_measure_and_draw(measure_and_draw_mtx);
-                    visual_tree_root->Measure(VERY_BIG_INT, VERY_BIG_INT);
-                    std::unique_lock<std::mutex> lck_view(view_mtx);
-                    if(view.rows != visual_tree_root->GetMeasuredHeight() ||
-                        view.cols != visual_tree_root->GetMeasuredWidth()){
-                        view = Mat::zeros(visual_tree_root->GetMeasuredHeight(),
-                                visual_tree_root->GetMeasuredWidth(), CV_8UC3);
-                    }
-                    background->Draw(view);
-                    visual_tree_root->Draw(view);
-                    cv::resize(view, view, cv::Size(0, 0), scale_x, scale_y, CV_INTER_LANCZOS4);
+                visual_tree_root->Measure(VERY_BIG_INT, VERY_BIG_INT);
+                if(view.rows != visual_tree_root->GetMeasuredHeight() ||
+                    view.cols != visual_tree_root->GetMeasuredWidth()){
+                    view = Mat::zeros(visual_tree_root->GetMeasuredHeight(),
+                            visual_tree_root->GetMeasuredWidth(), CV_8UC3);
                 }
+                background->Draw(view);
+                visual_tree_root->Draw(view);
+                if(scale_x != 1.0 || scale_y != 1.0)
+                    cv::resize(view, view, cv::Size(0, 0),
+                        scale_x, scale_y, CV_INTER_LANCZOS4);
                 cv::imshow(title, view);
-                if(cv::waitKey(interval_ms) == 27) break;
+                if(!user_input){
+                    if(cv::waitKey(interval_ms_big) == 27) break;
+                }
+                else{
+                    if(cv::waitKey(interval_ms_small) == 27) break;
+                    --user_input;
+                }
             }
             cv::destroyWindow(title);
         }
@@ -97,11 +103,6 @@ namespace EZVisual{
         catch(string s){
             cerr << s << endl;
         }
-    }
-
-    void Visualization::Invoke(const function<void(Visualization*)>& operation){
-        std::unique_lock<std::mutex> lck_measure_and_draw(measure_and_draw_mtx);
-        operation(this);
     }
 
 }

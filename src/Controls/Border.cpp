@@ -9,7 +9,7 @@ namespace EZVisual{
         Contentable(json),
         VisualElement(json){}
 
-    void Border::Draw(cv::Mat& target){
+    void Border::OnDraw(cv::Mat& target){
         if(measured_height == 0 || measured_width == 0) return;
         if(target.rows < measured_height || target.cols < measured_width)
             throw "Border::Draw() need more space.";
@@ -41,7 +41,7 @@ namespace EZVisual{
         }
     }
 
-    void Border::Measure(int desired_width, int desired_height){
+    void Border::OnMeasure(int desired_width, int desired_height){
         this->Marginable::GetFreeSpace(desired_width, desired_height);
         if(width != WRAP_CONTENT && width != FILL_PARENT) content_width = min(content_width, width);
         if(height != WRAP_CONTENT && height != FILL_PARENT) content_height = min(content_height, height);

@@ -22,9 +22,6 @@ namespace EZVisual{
     public:
         Canvas(rapidjson::Value& json);
 
-        void Draw(cv::Mat& target);
-        void Measure(int desired_width, int desired_height);
-
         VisualElementType getType() const;
 
         /**@brief Paint color on this canvas.
@@ -164,6 +161,9 @@ namespace EZVisual{
         std::mutex inner_q_mtx;
         queue<pair<int, int>> inner_q;
         set<pair<int, int>> inner_set;
+
+        void OnDraw(cv::Mat& target);
+        void OnMeasure(int desired_width, int desired_height);
     };
 
 }

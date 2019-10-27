@@ -30,9 +30,11 @@ namespace EZVisual{
          * Set content for a visual element. An element may only have one content, so the old content will be freed immediately if a new one is set.
          */
         void SetContent(VisualElement* content){
+            measure_and_draw_mtx.lock_shared();
             if(this->content == content) return;
             if(this->content) delete content;
             this->content = content;
+            measure_and_draw_mtx.unlock_shared();
         }
 
         /**@brief Get content of a visual element.

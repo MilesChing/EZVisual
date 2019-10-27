@@ -7,7 +7,7 @@ namespace EZVisual{
         Marginable(json),
         VisualElement(json){}
 
-    void PlainText::Draw(cv::Mat& target){
+    void PlainText::OnDraw(cv::Mat& target){
         if(!measured_height || !measured_width || !content_width || !content_height) return;
 
         static cv::Point origin;
@@ -37,7 +37,7 @@ namespace EZVisual{
                     font_color.Cover(content_roi.at<cv::Vec3b>(i, j));
     }
 
-    void PlainText::Measure(int desired_width, int desired_height){
+    void PlainText::OnMeasure(int desired_width, int desired_height){
         this->Marginable::GetFreeSpace(desired_width, desired_height);
         if(width != WRAP_CONTENT && width != FILL_PARENT) content_width = min(content_width, width);
         if(height != WRAP_CONTENT && height != FILL_PARENT) content_height = min(content_height, height);

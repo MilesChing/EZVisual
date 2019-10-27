@@ -1,6 +1,7 @@
 #pragma once
 #include "opencv2/opencv.hpp"
 #include "EZVisual/Core.h"
+#include "EZVisual/Tools/SharedMutex.hpp"
 #include "rapidjson/rapidjson.h"
 #include "rapidjson/document.h"
 #include "rapidjson/stringbuffer.h"
@@ -32,8 +33,8 @@ namespace EZVisual{
 
     public:
         static VisualElement* CreateInstance(rapidjson::Value& json);
-        virtual void Draw(cv::Mat& target) = 0;
-        virtual void Measure(int desired_width, int desired_height) = 0;
+        void Measure(int desired_width, int desired_height);
+        void Draw(cv::Mat& target);
         virtual VisualElementType getType() const = 0;
 
         Event<MouseEventParameter> MouseEntered;
@@ -60,6 +61,10 @@ namespace EZVisual{
 
     protected:
         friend class Visualization;
+        virtual void OnDraw(cv::Mat& target) = 0;
+        virtual void OnMeasure(int desired_width, int desired_height) = 0;
+
+        EZVisual::shared_mutex measure_and_draw_mtx;
 
         int id = -1, width = WRAP_CONTENT, height = WRAP_CONTENT;
         int measured_width = -1, measured_height = -1;

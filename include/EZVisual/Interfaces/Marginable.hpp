@@ -31,10 +31,12 @@ namespace EZVisual{
          * @param bottom Size of the bottom margin.
          */
         void SetMargin(int left, int top, int right, int bottom){
+            measure_and_draw_mtx.lock_shared();
             margin[0] = left;
             margin[1] = top;
             margin[2] = right;
             margin[3] = bottom;
+            measure_and_draw_mtx.unlock_shared();
         }
 
         /**@brief Get the margin of a visual element.
