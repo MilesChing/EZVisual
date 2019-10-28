@@ -29,4 +29,8 @@ namespace EZVisual{
         }
     }
 
+    Brush* SolidColorBrush::GetCopy() const{
+        return new SolidColorBrush(*this);
+    }
+
 }

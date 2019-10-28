@@ -16,6 +16,7 @@ namespace EZVisual{
     class Brush{
     public:
         static Brush* CreateInstance(rapidjson::Value& json);
+        virtual Brush* GetCopy() const = 0;
         virtual void Draw(cv::Mat& mat) = 0;
         virtual BrushType GetType() const;
         virtual ~Brush(){}

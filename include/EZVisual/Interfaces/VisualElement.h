@@ -24,9 +24,9 @@ namespace EZVisual{
         EventTrigger<MouseEventParameter> MouseEnteredTrigger;
         EventTrigger<MouseEventParameter> MouseExitedTrigger;
         EventTrigger<MouseEventParameter> MouseMovingTrigger;
-        EventTrigger<MouseEventParameter> MouseLeftPressedTrigger;
+        EventTrigger<MouseEventParameter> MousePressedTrigger;
+        EventTrigger<MouseEventParameter> MouseReleasedTrigger;
         EventTrigger<MouseEventParameter> MouseRightPressedTrigger;
-        EventTrigger<MouseEventParameter> MouseLeftReleasedTrigger;
         EventTrigger<MouseEventParameter> MouseRightReleasedTrigger;
 
         void BindEventTriggers();
@@ -40,9 +40,9 @@ namespace EZVisual{
         Event<MouseEventParameter> MouseEntered;
         Event<MouseEventParameter> MouseExited;
         Event<MouseEventParameter> MouseMoving;
-        Event<MouseEventParameter> MouseLeftPressed;
+        Event<MouseEventParameter> MousePressed;
+        Event<MouseEventParameter> MouseReleased;
         Event<MouseEventParameter> MouseRightPressed;
-        Event<MouseEventParameter> MouseLeftReleased;
         Event<MouseEventParameter> MouseRightReleased;
 
         VisualElement(rapidjson::Value& json);
@@ -51,13 +51,14 @@ namespace EZVisual{
         int GetMeasuredWidth() const;
         int GetMeasuredHeight() const;
         int GetId() const;
+        int GetX() const;
+        int GetY() const;
 
         HorizontalAlignment GetHorizontalAlignment() const;
         VerticalAlignment GetVerticalAlignment() const;
 
         virtual VisualElement* SearchElementById(int id);
-
-        virtual bool CheckMouseEvent(const MouseEventParameter& params);
+        virtual void OnMouse(const MouseState& new_state, const MouseState& old_state);
 
     protected:
         friend class Visualization;
@@ -73,10 +74,15 @@ namespace EZVisual{
         HorizontalAlignment horizontal_alignment = HorizontalAlignment::Left;
         VerticalAlignment vertical_alignment = VerticalAlignment::Top;
 
+        //Mouse
+        MouseState stored_mouse_state;
         bool is_mouse_in = false;
 
-        void CallMouseEvent(const MouseEventType& type, MouseEventParameter& param);
+        void HandleBasicMouseEvents(const MouseState& new_state, const MouseState& old_state) const;
 
+        virtual bool IsMouseIn(const MouseState& mouse_state) const;
+
+        //XY
         void UpdateGlobalXY(const cv::Mat& target);
     };
 

@@ -139,5 +139,8 @@ namespace EZVisual{
         return BrushType::LinearGradientBrush;
     }
 
+    Brush* LinearGradientBrush::GetCopy() const{
+        return new LinearGradientBrush(*this);
+    }
 
 }

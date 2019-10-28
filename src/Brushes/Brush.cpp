@@ -25,5 +25,4 @@ namespace EZVisual{
     BrushType Brush::GetType() const{
         return BrushType::Null;
     }
-
 }

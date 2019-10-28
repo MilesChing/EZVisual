@@ -90,7 +90,13 @@
                         "FontColor": "#FFFFFF",
                         "FontSize": 0.6,
                         "FontWeight": 1,
-                        "FontFamily": 2     }
+                        "FontFamily": 2     },
+
+                    {   "Type": "Button",
+                        "Height": 40, "Width": 160,
+                        "Background": "#FF0000",
+                        "MouseOverBackground": "#AA0000",
+                        "MousePressedBackground": "#770000"}
                 ]
             },
 

@@ -15,23 +15,24 @@ namespace EZVisual{
     const int WRAP_CONTENT = 0;
     const int FILL_PARENT = -1;
 
-    enum class MouseEventType : std::uint8_t{
-        Null = 0,
-        MouseEntered = 1,
-        MouseExited = 2,
-        MouseMoving = 3,
-        MouseLeftPressed = 4,
-        MouseRightPressed = 5,
-        MouseLeftReleased = 6,
-        MouseRightReleased = 7
+
+    class MouseState{
+    public:
+        int global_x = -1;
+        int global_y = -1;
+        enum class ButtonState : std::uint8_t{
+            Released = 0,
+            Pressed = 1
+        };
+
+        ButtonState left_button = ButtonState::Released;
+        ButtonState right_button = ButtonState::Released;
     };
 
-    struct MouseEventParameter{
-        int relative_x;
-        int relative_y;
-        //Left, Right, Middle
-        MouseEventType current_event_type;
+    class MouseEventParameter{
+    public:
         VisualElement* sender;
+        MouseState mouse_state;
     };
 
     enum class HorizontalAlignment : std::uint8_t{
@@ -53,7 +54,8 @@ namespace EZVisual{
         Border = 1,
         StackView = 2,
         PlainText = 3,
-        Canvas = 4
+        Canvas = 4,
+        Button = 5
     };
 
     enum class Orientation : std::uint8_t{

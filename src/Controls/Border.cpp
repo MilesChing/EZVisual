@@ -18,8 +18,8 @@ namespace EZVisual{
             Mat border_roi(target,
                 Rect(margin[0], margin[1],
                     border_width, border_height));
-            background->Draw(border_roi);
             UpdateGlobalXY(border_roi);
+            OnDrawBackground(border_roi);
 
             if(content_width > 0 && content_height > 0 && content){
                 int content_x = 0, content_y = 0;
@@ -36,9 +36,17 @@ namespace EZVisual{
                 }
 
                 Mat content_roi(border_roi, Rect(content_x, content_y, content_width, content_height));
-                content->Draw(content_roi);
+                OnDrawContent(content_roi);
             }
         }
+    }
+
+    void Border::OnDrawBackground(cv::Mat& border_roi){
+        background->Draw(border_roi);
+    }
+
+    void Border::OnDrawContent(cv::Mat& content_roi){
+        content->Draw(content_roi);
     }
 
     void Border::OnMeasure(int desired_width, int desired_height){
@@ -71,9 +79,9 @@ namespace EZVisual{
         }
     }
 
-    bool Border::CheckMouseEvent(const MouseEventParameter& params){
-        if(content && content->CheckMouseEvent(params)) return true;
-        else return this->VisualElement::CheckMouseEvent(params);
+    void Border::OnMouse(const MouseState& new_state, const MouseState& old_state){
+        if(content) content->OnMouse(new_state, old_state);
+        this->VisualElement::OnMouse(new_state, old_state);
     }
 
     VisualElementType Border::getType() const{

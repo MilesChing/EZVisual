@@ -33,7 +33,7 @@ int main(){
         //Store Border in borders
         borders[i] = vis.Get<Border>(i+10);
         //Register listeners
-        borders[i]->MouseLeftPressed += [&](const EZVisual::MouseEventParameter& param){
+        borders[i]->MousePressed += [&](const EZVisual::MouseEventParameter& param){
             //Don't use i here
             if(current_index == param.sender->GetId() - 10) return;
             int old_idx = current_index;
@@ -52,12 +52,12 @@ int main(){
     //Register listener for canvas
     canvas = vis.Get<Canvas>(16);
     //Set drawing mode when left button pushed.
-    canvas->MouseLeftPressed += [&](const EZVisual::MouseEventParameter& param){
+    canvas->MousePressed += [&](const EZVisual::MouseEventParameter& param){
         drawing = true;
         first_point = true;
     };
     //Set drawing mode when left button released.
-    canvas->MouseLeftReleased += [&](const EZVisual::MouseEventParameter& param){
+    canvas->MouseReleased += [&](const EZVisual::MouseEventParameter& param){
         drawing = false;
         first_point = false;
     };
@@ -71,16 +71,19 @@ int main(){
         if(!drawing) return;
         if(first_point){
             //At the first point after pointer down, draw a circle.
-            canvas->PaintCircle(make_pair(param.relative_x, param.relative_y),
+            canvas->PaintCircle(make_pair(param.mouse_state.global_x - canvas->GetX(),
+                param.mouse_state.global_y - canvas->GetY()),
                 2, current_color, 0, 0, 0);
             first_point = false;
         }
         else{
             //At other points, draw line segments.
-            canvas->PaintLine(make_pair(param.relative_x, param.relative_y),
+            canvas->PaintLine(make_pair(param.mouse_state.global_x - canvas->GetX(),
+                param.mouse_state.global_y - canvas->GetY()),
                 current_point, current_color, 0, 2.0);
         }
-        current_point = make_pair(param.relative_x, param.relative_y);
+        current_point = make_pair(param.mouse_state.global_x - canvas->GetX(),
+            param.mouse_state.global_y - canvas->GetY());
     };
 
     //The window will be waiting for key 27 by default

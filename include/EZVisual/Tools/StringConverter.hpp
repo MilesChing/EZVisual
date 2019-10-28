@@ -11,6 +11,7 @@ namespace EZVisual{
             else if(str == "StackView") return VisualElementType::StackView;
             else if(str == "PlainText") return VisualElementType::PlainText;
             else if(str == "Canvas") return VisualElementType::Canvas;
+            else if(str == "Button") return VisualElementType::Button;
             else return VisualElementType::Null;
         }
 

@@ -44,28 +44,18 @@ namespace EZVisual{
 
     void Visualization::OnMouse(int event,int x,int y,int flags,void *ustc){
         Visualization* tis = (Visualization*)ustc;
-        tis->user_input = 200;
-        tis->mouse_event_param.relative_x = x;
-        tis->mouse_event_param.relative_y = y;
+        tis->old_state = tis->new_state;
+        tis->new_state.global_x = x;
+        tis->new_state.global_y = y;
         switch (event){
-            case CV_EVENT_MOUSEMOVE:
-                tis->mouse_event_param.current_event_type =
-                    MouseEventType::MouseMoving; break;
-            case CV_EVENT_LBUTTONDOWN:
-                tis->mouse_event_param.current_event_type =
-                    MouseEventType::MouseLeftPressed; break;
-            case CV_EVENT_LBUTTONUP:
-                tis->mouse_event_param.current_event_type =
-                    MouseEventType::MouseLeftReleased; break;
-            case CV_EVENT_RBUTTONDOWN:
-                tis->mouse_event_param.current_event_type =
-                    MouseEventType::MouseRightPressed; break;
-            case CV_EVENT_RBUTTONUP:
-                tis->mouse_event_param.current_event_type =
-                    MouseEventType::MouseRightReleased; break;
+            case CV_EVENT_MOUSEMOVE: break;
+            case CV_EVENT_LBUTTONDOWN: tis->new_state.left_button = MouseState::ButtonState::Pressed; break;
+            case CV_EVENT_LBUTTONUP: tis->new_state.left_button = MouseState::ButtonState::Released; break;
+            case CV_EVENT_RBUTTONDOWN: tis->new_state.right_button = MouseState::ButtonState::Pressed; break;
+            case CV_EVENT_RBUTTONUP: tis->new_state.right_button = MouseState::ButtonState::Released; break;
             default: return;
         }
-        tis->visual_tree_root->CheckMouseEvent(tis->mouse_event_param);
+        tis->visual_tree_root->OnMouse(tis->new_state, tis->old_state);
     }
 
     void Visualization::LaunchWindow(){

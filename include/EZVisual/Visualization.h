@@ -54,9 +54,8 @@ namespace EZVisual{
         unordered_map<int, VisualElement*> controls_table;
 
         //Mouse Event Handler
-        bool buttons[3];
-        time_t buttons_down_time[3];
-        MouseEventParameter mouse_event_param;
+        MouseState new_state;
+        MouseState old_state;
 
         static void OnMouse(int event,int x,int y,int flags,void* visualization);
     };

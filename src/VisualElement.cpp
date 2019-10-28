@@ -21,6 +21,7 @@ namespace EZVisual{
             case VisualElementType::StackView: return new StackView(json);
             case VisualElementType::PlainText: return new PlainText(json);
             case VisualElementType::Canvas: return new Canvas(json);
+            case VisualElementType::Button: return new Button(json);
             default: return NULL;
         }
     }
@@ -47,6 +48,14 @@ namespace EZVisual{
         return id;
     }
 
+    int VisualElement::GetX() const{
+        return x;
+    }
+
+    int VisualElement::GetY() const{
+        return y;
+    }
+
     HorizontalAlignment VisualElement::GetHorizontalAlignment() const{
         return horizontal_alignment;
     }
@@ -59,9 +68,9 @@ namespace EZVisual{
         MouseEntered.BindTrigger(&MouseEnteredTrigger);
         MouseExited.BindTrigger(&MouseExitedTrigger);
         MouseMoving.BindTrigger(&MouseMovingTrigger);
-        MouseLeftPressed.BindTrigger(&MouseLeftPressedTrigger);
+        MousePressed.BindTrigger(&MousePressedTrigger);
         MouseRightPressed.BindTrigger(&MouseRightPressedTrigger);
-        MouseLeftReleased.BindTrigger(&MouseLeftReleasedTrigger);
+        MouseReleased.BindTrigger(&MouseReleasedTrigger);
         MouseRightReleased.BindTrigger(&MouseRightReleasedTrigger);
     }
 
@@ -101,49 +110,6 @@ namespace EZVisual{
         else return NULL;
     }
 
-    bool VisualElement::CheckMouseEvent(const MouseEventParameter& params){
-        bool in_this = params.relative_x >= x && params.relative_x < x + measured_width
-            && params.relative_y >= y && params.relative_y < y + measured_height;
-        if(!in_this && !is_mouse_in) return false;
-        MouseEventParameter rel_tmp(params);
-        rel_tmp.relative_x = params.relative_x - x;
-        rel_tmp.relative_y = params.relative_y - y;
-        if(params.current_event_type == MouseEventType::MouseMoving){
-            if(in_this ^ is_mouse_in){
-                if(in_this) CallMouseEvent(MouseEventType::MouseEntered, rel_tmp);
-                else CallMouseEvent(MouseEventType::MouseExited, rel_tmp);
-                is_mouse_in = in_this;
-                return false; //if not in this, may be in other controls
-            }
-            else if(in_this){
-                //if moving in this, no event would be triggered in other controls
-                CallMouseEvent(MouseEventType::MouseMoving, rel_tmp);
-                return true;
-            }
-            else return false;
-        }
-        else if(in_this){
-            CallMouseEvent(params.current_event_type, rel_tmp);
-            return true;
-        }
-        else return false;
-    }
-
-    void VisualElement::CallMouseEvent(const MouseEventType& type, MouseEventParameter& param){
-        param.sender = this;
-        param.current_event_type = type;
-        switch(param.current_event_type){
-            case MouseEventType::MouseEntered: MouseEnteredTrigger.Invoke(param); break;
-            case MouseEventType::MouseExited: MouseExitedTrigger.Invoke(param); break;
-            case MouseEventType::MouseMoving: MouseMovingTrigger.Invoke(param); break;
-            case MouseEventType::MouseLeftPressed: MouseLeftPressedTrigger.Invoke(param); break;
-            case MouseEventType::MouseRightPressed: MouseRightPressedTrigger.Invoke(param); break;
-            case MouseEventType::MouseLeftReleased: MouseLeftReleasedTrigger.Invoke(param); break;
-            case MouseEventType::MouseRightReleased: MouseRightReleasedTrigger.Invoke(param); break;
-            default: break;
-        }
-    }
-
     void VisualElement::UpdateGlobalXY(const cv::Mat& target){
         static cv::Point xy;
         static cv::Size sz;
@@ -152,4 +118,49 @@ namespace EZVisual{
         y = xy.y;
     }
 
+    void VisualElement::HandleBasicMouseEvents(const MouseState& new_state, const MouseState& old_state) const{
+        const bool new_is_mouse_in = IsMouseIn(new_state);
+        const bool old_is_mouse_in = IsMouseIn(old_state);
+        MouseEventParameter param;
+        param.sender = (VisualElement*)(void*)this;
+        param.mouse_state = new_state;
+
+        //MouseEntered & MouseExited
+        if(old_is_mouse_in ^ new_is_mouse_in){
+            if(old_is_mouse_in) MouseExitedTrigger.Invoke(param);
+            else MouseEnteredTrigger.Invoke(param);
+        }
+
+        //MouseMoving
+        if(new_state.global_x != old_state.global_x &&
+            new_state.global_y != old_state.global_y && new_is_mouse_in)
+            MouseMovingTrigger.Invoke(param);
+
+        //MousePressed & MouseReleased
+        if(new_is_mouse_in && new_state.left_button != old_state.left_button){
+            if(new_state.left_button == MouseState::ButtonState::Pressed)
+                MousePressedTrigger.Invoke(param);
+            else MouseReleasedTrigger.Invoke(param);
+        }
+
+        //MouseRightPressed & MouseRightReleased
+        if(new_is_mouse_in && new_state.right_button != old_state.right_button){
+            if(new_state.right_button == MouseState::ButtonState::Pressed)
+                MousePressedTrigger.Invoke(param);
+            else MouseReleasedTrigger.Invoke(param);
+        }
+    }
+
+    void VisualElement::OnMouse(const MouseState& new_state, const MouseState& old_state){
+        HandleBasicMouseEvents(new_state, old_state);
+    }
+
+    bool VisualElement::IsMouseIn(const MouseState& state) const{
+        return (
+            state.global_x >= x &&
+            state.global_y >= y &&
+            state.global_x <= x + measured_width &&
+            state.global_y <= y + measured_width
+        );
+    }
 }

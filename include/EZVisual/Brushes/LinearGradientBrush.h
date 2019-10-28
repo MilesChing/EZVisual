@@ -12,6 +12,7 @@ namespace EZVisual{
         static LinearGradientBrush* CreateInstance(const vector<pair<double, Color>>& offset_color_pairs, double angle = 0);
         BrushType GetType() const;
         void Draw(cv::Mat& mat);
+        Brush* GetCopy() const;
     protected:
         friend class Brush;
         vector<pair<double, Color>> offset_color_pairs;

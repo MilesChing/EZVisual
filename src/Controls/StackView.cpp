@@ -98,11 +98,10 @@ namespace EZVisual{
         }
     }
 
-    bool StackView::CheckMouseEvent(const MouseEventParameter& params){
-        for(auto child : children)
-            if(child->CheckMouseEvent(params))
-                return true;
-        return this->VisualElement::CheckMouseEvent(params);
+    void StackView::OnMouse(const MouseState& new_state, const MouseState& old_state){
+        for(auto& child : children)
+            if(child) child->OnMouse(new_state, old_state);
+        this->VisualElement::OnMouse(new_state, old_state);
     }
 
     VisualElementType StackView::getType() const{

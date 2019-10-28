@@ -12,6 +12,7 @@ namespace EZVisual{
         BrushType GetType() const;
         void Draw(cv::Mat& mat);
         EZVisual::Color GetColor() const;
+        Brush* GetCopy() const;
     protected:
         friend class Brush;
         EZVisual::Color color = 0x0;

@@ -19,8 +19,8 @@ namespace EZVisual{
                     , virtual public Orientationable{
     public:
         StackView(rapidjson::Value& json);
-        bool CheckMouseEvent(const MouseEventParameter& params);
         VisualElementType getType() const;
+        virtual void OnMouse(const MouseState& new_state, const MouseState& old_state);
 
     protected:
         void OnDraw(cv::Mat& target);
