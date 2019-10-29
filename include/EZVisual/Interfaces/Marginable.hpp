@@ -31,12 +31,10 @@ namespace EZVisual{
          * @param bottom Size of the bottom margin.
          */
         void SetMargin(int left, int top, int right, int bottom){
-            measure_and_draw_mtx.lock_shared();
             margin[0] = left;
             margin[1] = top;
             margin[2] = right;
             margin[3] = bottom;
-            measure_and_draw_mtx.unlock_shared();
         }
 
         /**@brief Get the margin of a visual element.
@@ -59,12 +57,12 @@ namespace EZVisual{
 
     protected:
         void GetFreeSpace(int desired_width, int desired_height){
-            content_width = max(desired_width - margin[0] - margin[2], 0);
-            content_height = max(desired_height - margin[1] - margin[3], 0);
+            control_border_width = max(desired_width - margin[0] - margin[2], 0);
+            control_border_height = max(desired_height - margin[1] - margin[3], 0);
         }
 
         int margin[4] = {0};
-        int content_width, content_height;
+        int control_border_width, control_border_height;
     };
 
 }

@@ -26,16 +26,6 @@ namespace EZVisual{
         }
     }
 
-    void VisualElement::Measure(int desired_width, int desired_height){
-        measure_and_draw_mtx.lock();
-        OnMeasure(desired_width, desired_height);
-    }
-
-    void VisualElement::Draw(cv::Mat& target){
-        OnDraw(target);
-        measure_and_draw_mtx.unlock();
-    }
-
     int VisualElement::GetMeasuredWidth() const{
         return measured_width;
     }
@@ -160,7 +150,7 @@ namespace EZVisual{
             state.global_x >= x &&
             state.global_y >= y &&
             state.global_x <= x + measured_width &&
-            state.global_y <= y + measured_width
+            state.global_y <= y + measured_height
         );
     }
 }

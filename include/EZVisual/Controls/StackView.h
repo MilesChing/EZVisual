@@ -21,10 +21,10 @@ namespace EZVisual{
         StackView(rapidjson::Value& json);
         VisualElementType getType() const;
         virtual void OnMouse(const MouseState& new_state, const MouseState& old_state);
+        virtual void Draw(cv::Mat& target);
+        virtual void Measure(int desired_width, int desired_height);
 
     protected:
-        void OnDraw(cv::Mat& target);
-        void OnMeasure(int desired_width, int desired_height);
 
     };
 

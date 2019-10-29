@@ -20,9 +20,7 @@ namespace EZVisual{
 
         /**Set text for this element.*/
         void SetText(const char* text){
-            measure_and_draw_mtx.lock_shared();
             this->text = string(text);
-            measure_and_draw_mtx.unlock_shared();
         }
 
         /**Set font size for this element.
@@ -30,10 +28,8 @@ namespace EZVisual{
          * @param font_size Font size to be set for. 0.8 is recommended for ordinary texts.
          */
         void SetFontSize(double font_size){
-            measure_and_draw_mtx.lock_shared();
             if(font_size == this->font_size) return;
             this->font_size = font_size;
-            measure_and_draw_mtx.unlock_shared();
         }
 
         /**Set font color for this element.
@@ -41,10 +37,8 @@ namespace EZVisual{
          * @param color Font color to be set for.
          */
         void SetFontColor(const Color& color){
-            measure_and_draw_mtx.lock_shared();
             if(color == this->font_color) return;
             this->font_color = color;
-            measure_and_draw_mtx.unlock_shared();
         }
 
         /**Set font weight for this element.
@@ -52,10 +46,8 @@ namespace EZVisual{
          * @param font_weight Font weight to be set for. 1 is recommended for ordinary texts.
          */
         void SetFontWeight(int font_weight){
-            measure_and_draw_mtx.lock_shared();
             if(font_weight == this->font_weight) return;
             this->font_weight = font_weight;
-            measure_and_draw_mtx.unlock_shared();
         }
 
         /**@brief Set font family for this element.
@@ -65,9 +57,7 @@ namespace EZVisual{
          * @param font_family Font family to be set for.
          */
         void SetFontFamily(int font_family){
-            measure_and_draw_mtx.lock_shared();
             this->font_family = font_family;
-            measure_and_draw_mtx.unlock_shared();
         }
 
         /**Get text of this element.

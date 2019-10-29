@@ -86,6 +86,10 @@ int main(){
             param.mouse_state.global_y - canvas->GetY());
     };
 
+    vis.Get<Button>(5)->Clicked += [&](Button* sender){
+        canvas->ClearLayer(0);
+    };
+
     //The window will be waiting for key 27 by default
     t.join();
     return 0;

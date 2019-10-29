@@ -149,6 +149,8 @@ namespace EZVisual{
          */
         void PaintPixel(const pair<int, int>& point, const Color& point_color = 0xff000000, int layer_index = 0);
 
+        virtual void Draw(cv::Mat& target);
+        virtual void Measure(int desired_width, int desired_height);
 
     protected:
         int layer_count = 1;
@@ -162,8 +164,6 @@ namespace EZVisual{
         queue<pair<int, int>> inner_q;
         set<pair<int, int>> inner_set;
 
-        void OnDraw(cv::Mat& target);
-        void OnMeasure(int desired_width, int desired_height);
     };
 
 }

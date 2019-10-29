@@ -2,6 +2,7 @@
 #include "EZVisual/Interfaces/VisualElement.h"
 #include "EZVisual/Core.h"
 #include "EZVisual/Brushes.h"
+#include "EZEvent/Event.h"
 #include <string>
 #include <unordered_map>
 #include <thread>
@@ -41,8 +42,6 @@ namespace EZVisual{
         }
 
     private:
-        std::mutex view_mtx, measure_and_draw_mtx;
-
         EZVisual::Brush* background;
 
         string title = "EZVisual";

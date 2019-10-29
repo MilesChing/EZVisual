@@ -23,10 +23,8 @@ namespace EZVisual{
          * @param color Color to be set for.
          */
         void SetBackground(Brush* brush){
-            measure_and_draw_mtx.lock_shared();
             delete background;
             background = brush;
-            measure_and_draw_mtx.unlock_shared();
         }
 
         /**@brief Get the background color of a visual element.

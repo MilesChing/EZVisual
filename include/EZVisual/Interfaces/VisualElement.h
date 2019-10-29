@@ -33,8 +33,8 @@ namespace EZVisual{
 
     public:
         static VisualElement* CreateInstance(rapidjson::Value& json);
-        void Measure(int desired_width, int desired_height);
-        void Draw(cv::Mat& target);
+        virtual void Measure(int desired_width, int desired_height) = 0;
+        virtual void Draw(cv::Mat& target) = 0;
         virtual VisualElementType getType() const = 0;
 
         Event<MouseEventParameter> MouseEntered;
@@ -62,10 +62,6 @@ namespace EZVisual{
 
     protected:
         friend class Visualization;
-        virtual void OnDraw(cv::Mat& target) = 0;
-        virtual void OnMeasure(int desired_width, int desired_height) = 0;
-
-        EZVisual::shared_mutex measure_and_draw_mtx;
 
         int id = -1, width = WRAP_CONTENT, height = WRAP_CONTENT;
         int measured_width = -1, measured_height = -1;

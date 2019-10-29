@@ -19,10 +19,7 @@ namespace EZVisual{
         PlainText(rapidjson::Value& json);
         VisualElementType getType() const;
 
-    protected:
-        int base_line_height;
-
-        void OnDraw(cv::Mat& target);
-        void OnMeasure(int desired_width, int desired_height);
+        virtual void Draw(cv::Mat& target);
+        virtual void Measure(int desired_width, int desired_height);
     };
 }

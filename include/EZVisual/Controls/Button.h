@@ -24,7 +24,7 @@ namespace EZVisual{
         virtual ~Button();
         virtual VisualElementType getType() const;
     protected:
-        virtual void OnDrawBackground(cv::Mat& border_roi);
+        virtual void DrawBackground(cv::Mat& border_roi);
 
         EZEvent::EventTrigger<Button*> ClickedTrigger;
 

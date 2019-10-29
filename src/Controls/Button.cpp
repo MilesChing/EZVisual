@@ -25,7 +25,6 @@ namespace EZVisual{
 
         MouseExited += [this](const MouseEventParameter& param){
             ChangeBackground = NULL;
-            ClickedTrigger.Invoke(this);
         };
 
         MousePressed += [this](const MouseEventParameter& param){
@@ -34,6 +33,7 @@ namespace EZVisual{
 
         MouseReleased += [this](const MouseEventParameter& param){
             ChangeBackground = NULL;
+            ClickedTrigger.Invoke(this);
         };
     }
 
@@ -41,7 +41,7 @@ namespace EZVisual{
         return VisualElementType::Button;
     }
 
-    void Button::OnDrawBackground(cv::Mat& border_roi){
+    void Button::DrawBackground(cv::Mat& border_roi){
         if(ChangeBackground) ChangeBackground->Draw(border_roi);
         else background->Draw(border_roi);
     }

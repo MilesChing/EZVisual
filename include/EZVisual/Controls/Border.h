@@ -23,11 +23,11 @@ namespace EZVisual{
         Border(rapidjson::Value& json);
         virtual void OnMouse(const MouseState& new_state, const MouseState& old_state);
         virtual VisualElementType getType() const;
+        virtual void Draw(cv::Mat& target);
+        virtual void Measure(int desired_width, int desired_height);
     protected:
-        virtual void OnDraw(cv::Mat& target);
-        virtual void OnDrawBackground(cv::Mat& view);
-        virtual void OnDrawContent(cv::Mat& view);
-        virtual void OnMeasure(int desired_width, int desired_height);
+        virtual void DrawBackground(cv::Mat& view);
+        virtual void DrawContent(cv::Mat& view);
     };
 
 }
